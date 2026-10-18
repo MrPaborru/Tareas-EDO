@@ -1,0 +1,894 @@
+%------------------------ Deducción matriz fundamental -----------------------------
+\phantomsection % Para que \addcontentsline encuentre un ancla y los siguientes dos comandos no generen la misma ancla al inicio 
+\addcontentsline{toc}{section}{Forma general de la matriz fundamental en \texorpdfstring{$\mathbb{R}^2$}{R²}}
+\section*{Forma general de la matriz fundamental en $\mathbb{R}^2$}
+Sea $A \en M_{2\times 2}(\mathbb{R})$ y consideremos el sistema lineal homogéneo
+\(
+\dot{z} = Az.
+\)
+La matriz fundamental principal es $\Phi(t) = e^{At}$ con $\Phi(0) = I$. 
+A continuación, demostraremos la forma de $e^{At}$ según su espectro. El fin de esto es usarlo en los ejercicios de la lista.\par
+
+\begin{lema}\label{lema:CH}
+Sean $\tau = \operatorname{tr}(A)$ y $\Delta = \det(A)$. Para todo $k \geq 2$ existen polinomios $p_k, q_k \en \mathbb{R}[\tau, \Delta]$ con
+\[
+A^k = p_k(\tau, \Delta) A + q_k(\tau, \Delta) I%
+\quad\text{y}\quad
+\abs{p_k},\;\abs{q_k} \leq r^{k-1}
+\]
+para algún $r \en \mathbb{R}$.
+Por tanto la serie exponencial se reduce a
+\[
+e^{At} = \psi_0(t) I + \psi_1(t) A
+\]
+para algún par de funciones analíticas $\psi_0, \psi_1: \mathbb{R} \to \mathbb{R}$.
+\end{lema}
+
+\begin{proof}
+Es un resultado de álgebra lineal que el polinomio característico de $A$ es $\lambda^2 - \tau\lambda + \Delta I$.
+\emph{La afirmación sobre $A^k$ se demuestra por inducción sobre $k$}:
+\begin{itemize}
+\item \emph{Caso base ($k=2$):} Por Cayley-Hamilton, $A^2 = \tau A - \Delta I$. (notemos que $\smqty(p_2\\q_2) = \smqty(\tau&1\\-\Delta&0)\smqty(0\\1)$)
+
+\item \emph{Paso inductivo:} Supongamos que $A^k = p_k A + q_k I$. Entonces
+\[
+A^{k+1} = A \cdot A^k = A(p_k A + q_k I) = p_k A^2 + q_k A.
+\]
+Sustituyendo $A^2$ por $\tau A - \Delta I$ obtenemos:
+\[
+A^{k+1} = p_k (\tau A - \Delta I) + q_k A = (p_k \tau + q_k) A - p_k \Delta I,
+\]
+lo que completa la inducción con $p_{k+1} = \tau p_k + q_k$ y $q_{k+1} = -\Delta p_k$. (i.e., $\smqty(p_k\\q_k) = \smqty(\tau&1\\-\Delta&0)\smqty(p_{k-1}\\q_{k-1})$)
+\end{itemize}
+Este proceso inductivo también prueba que $\smqty(p_k\\q_k) = \smqty(\tau&1\\-\Delta&0)^{k-1}\smqty(0\\1)$, por lo cual, usando la norma del operador (resp. a las normas infinito en $\mathbb{R}^2$), obtenemos 
+\[
+\norm{(p_k,q_k)}_\infty \leq \norm{\smqty(\tau&1\\-\Delta&0)}^{k-1}_{\text{op}}
+\]
+por lo que basta con tomar $r \coloneq\norm{\smqty(\tau&1\\-\Delta&0)}_{\text{op}}$.
+Ahora expandimos la exponencial:
+\[
+e^{At} = \sum_{k=0}^{\infty} \frac{t^k}{k!} A^k = I + tA + \sum_{k=2}^{\infty} \frac{t^k}{k!} (p_k A + q_k I).
+\]
+Como $\abs{p_k},\abs{q_k} \leq r^{k-1}$ el criterio de comparación de series garantiza que $\sum_{k=2}^{\infty} \frac{t^k}{k!} q_k$ y $\sum_{k=2}^{\infty} \frac{t^k}{k!} p_k$ convergen absolutamente en todo $\mathbb{R}$. Luego, por linealidad: 
+\[
+e^{At} = \left[ 1 + \sum_{k=2}^{\infty} \frac{t^k}{k!} q_k \right] I + \left[ t + \sum_{k=2}^{\infty} \frac{t^k}{k!} p_k \right] A = \psi_0(t) I + \psi_1(t) A. 
+\]
+\end{proof}
+
+\bigskip
+
+El siguiente paso es determinar explícitamente $\psi_0(t)$ y $\psi_1(t)$ en cada caso espectral.
+
+\begin{teo}[Valores propios reales distintos]\label{teo:distinct}
+Supongamos que $A$ tiene valores propios reales distintos $\lambda_1 \neq \lambda_2 \en \mathbb{R}$. Entonces $A$ es diagonalizable sobre $\mathbb{R}$ y
+\[
+e^{At} = \frac{e^{\lambda_1 t} - e^{\lambda_2 t}}{\lambda_1 - \lambda_2} A + \frac{\lambda_1 e^{\lambda_2 t} - \lambda_2 e^{\lambda_1 t}}{\lambda_1 - \lambda_2} I.
+\]
+\end{teo}
+
+\begin{proof}
+Como $\lambda_1 \neq \lambda_2$, existe $P \en GL_2(\mathbb{R})$ tal que 
+\(
+A = P D P^{-1}\) con \( D = \operatorname{diag}(\lambda_1,\lambda_2)
+\)
+así que $e^{At} = P e^{Dt} P^{-1} = P \operatorname{diag}(e^{\lambda_1t}, e^{\lambda_2t}) P^{-1}$.\par\vspace{1em}
+
+\emph{Busquemos una fórmula para $e^{Dt}$ en términos de $D$}:\\
+Por el \myref{lema:CH}, sabemos que existen $\psi_0(t)$ y $\psi_1(t)$ tales que
+\[
+e^{Dt} = \psi_0(t) I + \psi_1(t) D.
+\]
+Dado que $D$ es diagonal y esta ecuación debe cumplirse en cada componente, obtenemos el siguiente sistema con incógnitas $\psi_0(t)$ y $\psi_1(t)$:
+\[
+\begin{cases}
+\;e^{\lambda_1 t} = \psi_0(t) + \lambda_1 \psi_1(t) \\
+\;e^{\lambda_2 t} = \psi_0(t) + \lambda_2 \psi_1(t)
+\end{cases}
+\]
+Resolver este sistema es elemental, así que omito los pasos y doy la solución directamente:
+\[
+\psi_1(t) = \frac{e^{\lambda_1 t} - e^{\lambda_2 t}}{\lambda_1 - \lambda_2}, \quad 
+\psi_0(t) = \frac{\lambda_1 e^{\lambda_2 t} - \lambda_2 e^{\lambda_1 t}}{\lambda_1 - \lambda_2}.
+\]
+De este modo, obtenemos 
+\[
+e^{Dt} = \frac{e^{\lambda_1 t} - e^{\lambda_2 t}}{\lambda_1 - \lambda_2} D + \frac{\lambda_1 e^{\lambda_2 t} - \lambda_2 e^{\lambda_1 t}}{\lambda_1 - \lambda_2} I
+\]
+Solo resta conjugar por $P$:
+\begin{align*}
+e^{At}%
+&= P e^{Dt} P^{-1}\\
+&= \frac{e^{\lambda_1 t} - e^{\lambda_2 t}}{\lambda_1 - \lambda_2} PDP^{-1} + \frac{\lambda_1 e^{\lambda_2 t} - \lambda_2 e^{\lambda_1 t}}{\lambda_1 - \lambda_2} PIP^{-1}\\
+&= \frac{e^{\lambda_1 t} - e^{\lambda_2 t}}{\lambda_1 - \lambda_2} A + \frac{\lambda_1 e^{\lambda_2 t} - \lambda_2 e^{\lambda_1 t}}{\lambda_1 - \lambda_2} I
+\end{align*}
+\end{proof}
+
+\begin{teo}[Valor propio real doble]
+\label{teo:doble}
+Supongamos que $A$ tiene un valor propio real doble $\lambda$:
+\begin{enumerate}[label = \roman*)]
+\item Si $A$ es diagonalizable, entonces $A = \lambda I$ y $e^{At} = e^{\lambda t} I$.
+\item Si $A$ no es diagonalizable, entonces $A$ es semejante a una matriz de Jordan $J = \smqty(\lambda & 1 \\ 0 & \lambda)$ y
+\[
+e^{At} = e^{\lambda t} \left( I + t(A - \lambda I) \right)
+\]
+\end{enumerate}
+\end{teo}
+
+\begin{proof}\hphantom{a}
+\begin{enumerate}[label = \roman*)]
+\item Si $A$ es diagonalizable con valor propio doble $\lambda$, entonces $A = P(\lambda I) P^{-1} = \lambda I$, luego $e^{At} = e^{\lambda t} I$.
+
+\item Si $A$ no es diagonalizable, su forma canónica de Jordan garantiza que existe $S \en GL_2(\mathbb{R})$ con
+\[
+A = S J S^{-1}, \quad J = \mqty(\lambda & 1 \\ 0 & \lambda)
+\]
+Luego, tenemos $J = \lambda I + N$ donde $N \coloneq \smqty(0 & 1 \\ 0 & 0)$ satisface $N^2 = 0$. Por lo cual, $N^k = 0$ para todo $k \geq 2$, de donde se sigue que
+\[
+e^{Jt}%
+= e^{\lambda t} e^{Nt}%
+= e^{\lambda t}\sum^\infty_{k=1} \frac{N^kt^k}{k!}
+= e^{\lambda t} (I + tN)
+\]
+Conjugando con $S$ llegamos a que
+\[
+e^{At} = S e^{Jt} S^{-1} = e^{\lambda t} S (I + tN) S^{-1} = e^{\lambda t} (I + t S N S^{-1}).
+\]
+Pero  $S N S^{-1} = S(J - \lambda I)S^{-1} = SJS^{-1} - \lambda SIS^{-1} = A - \lambda I$, por lo que:
+\[
+e^{At} = e^{\lambda t} \left( I + t(A - \lambda I) \right)
+\]
+\end{enumerate}
+\end{proof}
+
+\begin{teo}[Valores propios complejos]
+\label{teo:complex}
+Supongamos que los valores propios de $A$ son $\alpha \pm i\beta$ con $\beta \neq 0$. Entonces existe $S \en GL_2(\mathbb{R})$ tal que
+\[
+S^{-1} A S = \mqty(\alpha & \beta \\ -\beta & \alpha)
+\]
+y se tiene que la exponencial es
+\[
+e^{At} = e^{\alpha t} \left( \cos(\beta t) I + \frac{\sin(\beta t)}{\beta} (A - \alpha I) \right)
+\]
+\end{teo}
+
+\begin{proof}
+Sea $\lambda=\alpha+i\beta$ un valor propio de $A$ (como el polinomio característico de $A$ tiene coeficientes reales, el otro valor propio es $\ubar{\lambda}$) con vector propio complejo $z=u+iv$ no nulo, i.e., $u,v\en\mathbb{R}^2$ no son ambos cero. De $Az=\lambda z$ y separando partes real e imaginaria se obtiene
+\[
+Au = \alpha u - \beta v,
+\qquad
+Av = \beta u + \alpha v
+\]
+Además, $u,v$ son linealmente independientes: en efecto, si $v=tu$ para algún $t\en\mathbb R$, entonces $z=(1+it)u$ con $u\en\mathbb R^2\setminus\{0\}$, lo que forzaría que $u$ esté en el espacio propio de $z$, es decir, $A u=\lambda u$ con $\lambda\notin\mathbb R$: esto es absurdo, pues $A u$ tiene entradas reales y $\lambda u$ no. De esto se sigue que $\set{u,v}$ es l.i. así que es una base de $\mathbb R^2$.
+
+En dicha base, las igualdades $Au = \alpha u - \beta v$ y $Av = \beta u + \alpha v$ dicen que
+\[
+[A]_{(u,v)}=\mqty(\alpha & \beta \\ -\beta & \alpha)
+\]
+Por lo tanto, considerando el cambio de base $S \coloneq [\,u\ v\,] \en GL_2(\mathbb R)$, se tiene que
+\[
+S^{-1}AS=\mqty(\alpha & \beta \\ -\beta & \alpha)
+\]
+
+Ahora bien, denotemos $R = S^{-1}AS$, y veamos que $R$ se escribe como
+\[
+R = \alpha I + \beta J,%
+\quad \text{con}\quad%
+J = \mqty(0 & 1 \\ -1 & 0)
+\]
+Por lo tanto,
+\(
+e^{Rt} = e^{\alpha t} e^{\beta t J}
+\)
+y, gracias a que $J^2 = -I$, la serie de $e^{\beta t J}$ se convierte ---agrupando potencias pares e impares, que es posible gracias a la convergencia absoluta de la exponencial--- en 
+\[
+e^{\beta t J} = \sum_{k=0}^{\infty} \frac{(\beta t)^k}{k!} J^k
+= \left( \sum_{k=0}^{\infty} \frac{(-1)^k (\beta t)^{2k}}{(2k)!} \right) I
++ \left( \sum_{k=0}^{\infty} \frac{(-1)^k (\beta t)^{2k+1}}{(2k+1)!} \right) J
+\]
+es decir:
+\[
+e^{\beta t J} = \cos(\beta t) I + \sin(\beta t) J
+\]
+De donde
+\[
+e^{Rt} = e^{\alpha t} \left( \cos(\beta t) I + \sin(\beta t) J \right)
+\]
+Como $A = S R S^{-1}$, resulta
+\[
+e^{At} = S e^{Rt} S^{-1} = e^{\alpha t} \left( \cos(\beta t) I + \sin(\beta t) S J S^{-1} \right)
+\]
+Pero de $R = \alpha I + \beta J$ se deduce que $J = \tfrac{1}{\beta}(R - \alpha I)$, y por tanto
+\[
+S J S^{-1} = \tfrac{1}{\beta} (A - \alpha I)
+\]
+lo que completa la demostración.
+\end{proof}\clearpage
+
+%------------- Ejercicio 1 ------------
+\begin{ejer}
+\begin{enumerate}[label = (\alph*)]
+\item Dada una matriz $A$, probar que si $\alpha$ no es valor propio de $A$,
+entonces la ecuación
+\[
+\dot{x} = Ax + e^{\alpha t} b
+\]
+tiene una única solución $x(t) = e^{\alpha t}u$, con $u \en \mathbb{R}^n$.
+Calcular $u$ en función de $A$, $b$ y $\alpha$.
+
+\item Resolver el sistema
+\[
+\begin{cases}
+\;\dot{x} = 2x + y + e^{2t}, \\
+\;\dot{y} = x + 2y - e^{2t}.
+\end{cases}
+\]
+\end{enumerate}
+\end{ejer}
+\begin{sol}[Demostración]
+\begin{enumerate}[label = (\alph*)]
+\item Si suponemos que $x(t) = e^{\alpha t}u$ es solución de la EDO, entonces
+\[
+\dot{x}(t) = \alpha e^{\alpha t}u%
+\quad\text{y}\quad%
+Ax(t) + e^{\alpha t} b = Ae^{\alpha t}u + e^{\alpha t}b
+\]
+por lo cual, sustituyendo en la EDO, obtenemos
+\[
+\alpha e^{\alpha t}u = Ae^{\alpha t}u + e^{\alpha t}b
+\]
+Como $e^{\alpha t}$ siempre es positivo, podemos dividir por él y obtener
+\[
+\alpha u = Au + b%
+\quad\text{o, equivalentemente,}\quad
+(\alpha I - A)u = b
+\]
+Ahora bien, como $\alpha$ no es valor propio de $A$, se tiene que $(\alpha I - A)$ es invertible, de donde
+\[
+u = (\alpha I - A)^{-1}b
+\]
+Por lo tanto, la única posible solución de la forma $e^{\alpha t}u$ es
+\[
+x(t) = e^{\alpha t}(\alpha I - A)^{-1}b
+\]
+Si hubiésemos partido de una solución arbitraria $\varphi(t)$ y llegado a una forma específica para $\varphi$, el teorema de existencia y unicidad nos habría garantizado que dicha función satisface la EDO sin necesidad de comprobarlo;\footnote{Pues, formalmente, probamos que si existiese solución, esta tendría que ser la obtenida, como ya sabemos que existe solución, se sigue que la obtenida debe ser la solución.} sin embargo, aquí partimos de una forma específica para la solución, por lo que sí es necesario comprobar que la $x(t)$ obtenida satisface la EDO:
+\[
+\dot{x}(t) = \alpha e^{\alpha t}(\alpha I - A)^{-1}b%
+\quad\text{y}\quad%
+Ax(t) + e^{\alpha t}b = Ae^{\alpha t}(\alpha I - A)^{-1}b + e^{\alpha t}b = e^{\alpha t}(A(\alpha I - A)^{-1} + I)b
+\]
+pero,
+\[
+A(\alpha I - A)^{-1} + I =A(\alpha I - A)^{-1} + (\alpha I - A)(\alpha I - A)^{-1} = (A + \alpha I - A)(\alpha I - A)^{-1} = \alpha(\alpha I - A)^{-1}
+\]
+por tanto,
+\[
+Ax(t) + e^{\alpha t}b = e^{\alpha t}\big(\alpha(\alpha I - A)^{-1}\big)b = \alpha e^{\alpha t}(\alpha I - A)^{-1}b = \dot{x}(t)
+\]
+Esto comprueba que, en efecto, $x(t)$ es la única solución.
+
+\item El sistema dado se puede escribir como la EDO
+\[
+\mqty(\dot{x}\\\dot{y}) = \mqty(2&1\\1&2)\mqty(x\\y) + e^{2t}\mqty(1\\-1)
+\]
+Esto es, $\dot{z} = Az + e^{2t}b$ donde $z = \smqty(x\\y)$, $A = \smqty(2&1\\1&2)$ y $b = \smqty(1\\-1)$.\par\vspace{1em}
+\emph{Ahora resolvamos la EDO homogénea}:\\
+El polinomio característico es $p_A(\lambda) = \operatorname{det}(\lambda I - A) = (\lambda - 2)^2 - 1$; luego,
+\[
+p_A(\lambda) = 0%
+\iff%
+(\lambda-2) = \pm 1%
+\iff%
+\lambda = 2 \pm1%
+\iff%
+\lambda = 1\quad\text{o}\quad \lambda = 3
+\]
+Luego, los valores propios de $A$ son $\lambda_1 = 3$ y $\lambda_2 = 1$. Por el \myref{teo:distinct}, la matriz fundamental principal es 
+\begin{align*}
+e^{At}%
+&= \frac{e^{3t} - e^{t}}{2} A + \frac{3e^{t} - e^{3t}}{2} I\\
+&= \mqty(%
+    e^{3t} - e^t + \frac{1}{2}(3e^{t} - e^{3t}) & \frac{1}{2}(e^{3t} - e^{t})\\
+    \frac{1}{2}(e^{3t} - e^{t})                 & e^{3t} - e^t + \frac{1}{2}(3e^{t} - e^{3t}) 
+   )\\
+&= \frac{1}{2}\mqty(%
+   e^{3t} + e^t & e^{3t} - e^t\\
+   e^{3t} - e^t & e^{3t} + e^t
+   )
+\end{align*}
+Por lo tanto, por un punto $(t_0,z_0)$ con $z_0 = (x_0,y_0)$ pasa la solución 
+\[
+e^{A(t-t_0)}z_0%
+= \mqty(
+    x_0(e^{3(t-t_0)} + e^{(t-t_0)}) + y_0(e^{3(t-t_0)} - e^{(t-t_0)})\\
+    x_0(e^{3(t-t_0)} - e^{(t-t_0)}) + y_0(e^{3(t-t_0)} + e^{(t-t_0)})
+)%
+=\mqty(%
+    e^{3(t-t_0)}(x_0+y_0) + e^{(t-t_0)}(x_0-y_0)\\
+    e^{3(t-t_0)}(x_0+y_0) + e^{(t-t_0)}(y_0-x_0)
+)
+\]
+\par
+\emph{Solución particular}:\\
+Por el inciso (a), gracias a que $2$ no es valor propio de $A$, se sigue que hay una solución particular $x_p(t) = e^{2t}(2I-A)^{-1}b$. Es sencillo comprobar que 
+\[
+(2I-A)^{-1} = \mqty(0&-1\\-1&0)^{-1} = \mqty(0&-1\\-1&0)
+\quad\implies\quad%
+(2I-A)^{-1}b = \mqty(0&-1\\-1&0)\mqty(1\\-1) = \mqty(1\\-1)
+\]
+Así que $x_p(t) = e^{2t}b$.\par\vspace{1em}
+\emph{Solución general}:\\
+Sabemos que todas las soluciones son la suma de una solución homogénea y la particular. Por lo tanto, la solución de la EDO que pasa por el punto $(t_0,z_0)$ con $z_0 = (x_0,y_0)$ es
+\begin{align*}
+\varphi(t,t_0,z_0)%
+&= e^{A(t-t_0)}(z_0-e^{2t_0}b) + e^{2t}b\\
+&= \mqty(%
+    e^{3(t-t_0)}\big((x_0 - e^{2t_0}) + (y_0 + e^{2t_0})\big) + e^{(t-t_0)}\big((x_0 - e^{2t_0})-(y_0 + e^{2t_0})\big) - e^{2t}\\
+    e^{3(t-t_0)}\big((x_0 - e^{2t_0})+(y_0 + e^{2t_0})\big) + e^{(t-t_0)}\big((y_0 + e^{2t_0})-(x_0 - e^{2t_0})\big) + e^{2t}
+)\\
+&= \mqty(%
+    e^{3(t-t_0)}\big(x_0 + y_0\big) + e^{(t-t_0)}\big(x_0 - y_0 - 2e^{2t_0}\big) - e^{2t}\\
+    e^{3(t-t_0)}\big(x_0 + y_0\big) + e^{(t-t_0)}\big(y_0 - x_0 + 2e^{2t_0}\big) + e^{2t}
+)
+\end{align*}
+\end{enumerate}
+\end{sol}
+
+%------------- Ejercicio 2 ------------
+\begin{ejer}
+Hallar la solución general de las siguientes ecuaciones de segundo orden:
+\begin{enumerate}[label = (\alph*)]
+\item $\ddot{x} + 4x = 0$
+
+\item $\ddot{x} - 4x = 0$
+
+\item $\ddot{x} + \dot{x} + 4x = 0$
+
+\item $\ddot{x} + 3x = t^3 - 1$
+
+\item $\ddot{x} - 5\dot{x} - 6x = \sin t$
+
+\item $\ddot{x} + \dot{x} - 6x = \sin t + te^{2t}$
+\end{enumerate}
+\end{ejer}
+\begin{sol}
+\begin{enumerate}[leftmargin=*, label=(\alph*)]
+\item Ya vimos en el ejercicio 4 de la anterior lista de ejercicios que la solución general de $\ddot{x} + ax = 0$ con $a>0$ viene dada por el flujo de su EDO lineal asociada
+\[
+\phi^t(x,y) = \left(%
+        \cos(t\omega) x + \tfrac{1}{\omega}\sin(t\omega) y\;,\;%
+        -\omega\sin(t\omega) x + \cos(t\omega) y
+    \right)
+\]
+donde $\omega = \sqrt{a}$, $y = \dot{x}$ y la primer componente representa a $x(t)$ mientras que la segunda a $\dot{x}(t)$. Por lo tanto, la sol. general de la EDO dada es
+\[
+\varphi(t) =
+        \cos(2t) x_0 + \frac{1}{2}\sin(2t) y_0
+\]
+para una condición inicial $\varphi(0) = x_0$, $\dot\varphi(0) = y_0$.
+
+\item Análogamente, el ejercicio 4 de la lista anterior dice que el flujo de la EDO lineal asociada es
+\[
+\phi^t(x,y) = \left(%
+        \cosh(t\omega) x + \tfrac{1}{\omega}\sinh(t\omega) y\;,\;%
+        \omega\sinh(t\omega) x + \cosh(t\omega) y
+    \right)
+\]
+donde $\omega = \sqrt{-a} = \sqrt{4} = 2$. Luego, la sol. general de la EDO dada es
+\[
+\varphi(t) =
+        \cosh(2t) x_0 + \frac{1}{2}\sinh(2t) y_0
+\]
+para una condición inicial $\varphi(0) = x_0$, $\dot\varphi(0) = y_0$.
+
+\item Tomando $y = \dot{x}$ obtenemos que $\dot{y} = \ddot{x} = - 4x - \dot{x} = -4x - y$. Por lo tanto, basta resolver la EDO lineal asociada:
+\[
+\begin{cases}
+    \;\dot{x} = y\\
+    \;\dot{y} = -4x - y
+\end{cases}
+\iff\quad%
+\mqty(\dot{x}\\\dot{y}) = \mqty(0&1\\-4&-1)\mqty(x\\y)
+\]
+es decir, $\dot{z} = Az$ con $A \coloneq \smqty(0&1\\-4&-1)$. El polinomio característico de $A$ es 
+\[
+p_A(\lambda)%
+= \lambda(\lambda+1) + 4%
+= \lambda^2 + \lambda + 4
+\]
+cuyas raíces son
+\(
+\lambda_1 = -\frac12 + 2i\) y \(\lambda_2 = -\frac12 - 2i.
+\)
+Luego, el \myref{teo:complex} implica que la matriz fundamental principal es:
+\begin{align*}
+e^{At}% 
+&= e^{-\frac12t} \left( \cos(2t) I + \frac{\sin(2t)}{2} \big(A + \tfrac12I\big) \right)\\
+&= e^{-\frac12t}\mqty(%
+\cos(2t) + \tfrac14\sin(2t) & \tfrac12\sin(2t)\\
+-2\sin(2t) & \cos(2t) + \tfrac14\sin(2t) - \tfrac12\sin(2t)
+)\\
+&= e^{-\frac12t}\mqty(%
+\cos(2t) + \tfrac14\sin(2t) & \tfrac12\sin(2t)\\
+-2\sin(2t) & \cos(2t) - \tfrac14\sin(2t)
+)
+\end{align*}
+Por lo cual, el flujo de la EDO lineal asociada es
+\begin{align*}
+\phi^t(x,y)%
+&= e^{-\frac12t} \mqty(%
+\left(\cos(2t) + \tfrac14\sin(2t)\right)x + \tfrac12\sin(2t)y\\
+-2\sin(2t)x + \left(\cos(2t) - \tfrac14\sin(2t)\right)y
+)\\
+&= e^{-\frac12t} \mqty(%
+\cos(2t)x + \tfrac14\sin(2t)(x + 2y)\\
+\cos(2t)y - \tfrac14\sin(2t)(8x + y)
+)
+\end{align*}
+así que la sol. general de $\ddot{x} + \dot{x} + 4x = 0$ para la condición inicial $x(0) = x_0$ y $\dot{x}(0) = y_0$ es
+\[
+x(t) = e^{-\frac12t} \big(\cos(2t)x_0 + \tfrac14\sin(2t)(x_0 + 2y_0)\big)
+\]
+
+\item Análogamente al inciso (a), la solución general de la EDO homogénea $\ddot{x} + 3x = 0$ es
+\[
+x_h(t) =
+        \cos(\sqrt3t) x_0 + \frac{1}{\sqrt3}\sin(\sqrt3t) y_0
+\]
+\hphantom{a}\par
+\emph{Encontremos una solución particular}:\\
+Propongamos una solución de la forma $x_p(t) = at^3 + bt^2 + ct + d$. Sustituyendo en la EDO, obtenemos:
+\[
+t^3 - 1 = 
+\ddot{x}_p(t) + 3x_p(t) = 6at + 2b + 3(at^3 + bt^2 + ct + d)
+\]
+como esta igualdad se debe cumplir sobre todo un intervalo, los coeficientes en ambos lados deben ser iguales. Luego, comparando los coeficientes del término cúbico y cuadrático $1 = 3a$ y $0 = 3b$, por lo que $a = 1/3$ y $b=0$; además, comparando los coeficientes del término lineal y constante obtenemos $0 = 6a + 3c$ y $-1 = 2b + 3d$ por lo que $c = -2a = -2/3$ y $d = 1/3(-1+2b) = -1/3$. Por consiguiente, la solución particular es
+\[
+x_p(t) = \frac{1}{3}(t^3 - 2t  - 1)
+\]
+Como toda solución es suma de una solución homogénea y la solución particular, entonces la solución de la EDO no homogénea con condición inicial $x(t_0) = x_0$ y $\dot{x}(t_0) = y_0$ es la suma de solución homogénea con condición inicial $x_h(t_0) = x_0 - x_p(t_0)$ y $\dot{x}_h(t_0) = y_0 - \dot{x}_p(t_0)$ y la solución particular. Esto es:
+\[
+\varphi(t,t_0,x_0,y_0) =
+        \cos(\sqrt3(t-t_0))\big(x_0 - \tfrac13(t_0^3 - 2t_0  - 1)\big) + \frac{1}{\sqrt3}\sin(\sqrt3(t-t_0))\big(y_0 - t_0 + \tfrac23 \big) + \frac13(t^3 - 2t - 1)
+\]
+\item \emph{Resolvamos la EDO homogénea}:\\
+Tomando $y = \dot{x}$, la EDO homogénea $\ddot{x} - 5\dot{x} - 6x = 0$ se convierte en
+\[
+\begin{cases}
+\;\dot{x} = y\\
+\;\dot{y} = 6x + 5y
+\end{cases}%
+\iff\quad%
+\mqty(\dot{x}\\\dot{y}) = \mqty(0&1\\6&5)\mqty(x\\y)
+\]
+Es decir, $\dot{z} = Az$ con $A \coloneq \smqty(0&1\\6&5)$. El polinomio característico de $A$ es 
+\[
+p_A(\lambda) = \lambda(\lambda - 5)  - 6 = \lambda^2 - 5\lambda - 6 = (\lambda - 6)(\lambda + 1)
+\]
+por lo cual, los valores propios son $\lambda_1 = 6$ y $\lambda_2 = -1$. Por el \myref{teo:distinct} sabemos que la matriz fundamental principal de la EDO es
+\begin{align*}
+e^{At}%
+&= \frac{e^{6t} - e^{-t}}{7} A + \frac{6e^{-t}  + e^{6t}}{7}I\\
+&= \frac17\mqty(%
+    6e^{-t}  + e^{6t}  & e^{6t} - e^{-t}\\
+    6(e^{6t} - e^{-t}) & 5(e^{6t} - e^{-t}) + 6e^{-t}  + e^{6t}
+)\\
+&= \frac17\mqty(%
+    6e^{-t}  + e^{6t} & e^{6t} - e^{-t}\\
+    6e^{6t} - 6e^{-t} & 6e^{6t} + 5e^{-t}
+)
+\end{align*}
+por lo que la solución de la EDO homogénea viene dada por la primer componente del flujo
+\begin{align*}
+\phi^t(x,y)%
+&= e^{At}\smqty(x\\y) = \frac17\mqty( (6e^{-t}  + e^{6t})x + (e^{6t} - e^{-t})y \\ (6e^{6t} - 6e^{-t})x + (6e^{6t} + 5e^{-t})y )\\
+&= \frac17\mqty(e^{6t}(x+y) + e^{-t}(6x-y)\\6e^{6t}(x+y) + e^{-t}(-6x + 5y))
+\end{align*}
+es decir, 
+\[
+x_h(t) = \frac17\big( e^{6(t-t_0)}(x_0+y_0) + e^{-(t-t_0)}(6x_0-y_0) \big)
+\] 
+para una condición inicial $x_h(t_0) = x_0$ y $\dot{x}_0(t_0) = y_0$.\par\vspace{1em}
+
+\emph{Encontremos una solución particular}:\\
+Para la ecuación no homogénea $\ddot{x} - 5\dot{x} - 6x = \sin t$, proponemos una solución particular de la forma:
+\[
+x_p(t) = a\cos t + b\sin t
+\]
+Calculamos las derivadas:
+\begin{align*}
+\dot{x}_p(t) &= -a\sin t + b\cos t \\
+\ddot{x}_p(t) &= -a\cos t - b\sin t
+\end{align*}
+Sustituyendo en la EDO:
+\begin{align*}
+\ddot{x}_p - 5\dot{x}_p - 6x_p &= (-a\cos t - b\sin t) - 5(-a\sin t + b\cos t) - 6(a\cos t + b\sin t) \\
+&= (-a - 5b - 6a)\cos t + (-b + 5a - 6b)\sin t \\
+&= (-7a - 5b)\cos t + (5a - 7b)\sin t
+\end{align*}
+Igualando con $\sin t$, obtenemos el sistema:
+\[
+\begin{cases}
+-7a - 5b = 0 \\
+5a - 7b = 1
+\end{cases}
+\]
+Resolviendo: de la primera ecuación $a = -\frac{5}{7}b$, sustituyendo en la segunda:
+\[
+5(-\tfrac{5}{7}b) - 7b = 1 \Rightarrow -\tfrac{25}{7}b - 7b = 1 \Rightarrow -\tfrac{74}{7}b = 1 \Rightarrow b = -\tfrac{7}{74}
+\]
+Luego $a = -\tfrac{5}{7}(-\tfrac{7}{74}) = \tfrac{5}{74}$. Por tanto, la solución particular es:
+\[
+x_p(t) = \tfrac{5}{74}\cos t - \tfrac{7}{74}\sin t
+\]
+La solución general de la EDO no homogénea con condición inicial $x(t_0) = x_0$, $\dot{x}(t_0) = y_0$ es obtenida sumando la solución particular $x_p$ con la solución homogénea con condición inicial $x_h(t_0) = x_0 - x_p(t_0)$, $\dot{x}_h(t_0) = y_0 - \dot{x}_p(t_0)$. Entonces
+\[
+\varphi(t,t_0,x_0,y_0) = \frac17\left(e^{6(t-t_0)}C_1 + e^{-(t-t_0)}C_2\right) + \frac{1}{74}(5\cos t - 7\sin t)
+\]
+donde 
+\begin{align*}
+C_1 &= x_0 - \tfrac{1}{74}(5\cos t_0 - 7\sin t_0) + y_0 - \tfrac{1}{74}(-5\sin t_0 - 7\cos t_0) = x_0 + y_0 + \tfrac{1}{37}(\cos t_0 + 6\sin t_0)\\
+C_2 &= 6\big(x_0 - \tfrac{1}{74}(5\cos t_0 - 7\sin t_0)\big) - \big(y_0 - \tfrac{1}{74}(-5\sin t_0 - 7\cos t_0)\big)= 6x_0 - y_0 + \tfrac{1}{2}(-\cos t_0 + \sin t_0)
+\end{align*}
+para condiciones iniciales $x(t_0) = x_0$, $\dot{x}(t_0) = y_0$.
+
+\item \emph{Resolvamos la EDO homogénea}:\\
+tomando $y = \dot{x}$, la EDO homogénea $\ddot{x} + \dot{x} - 6x = 0$ se convierte en 
+\[
+\begin{cases}
+\;\dot{x} = y\\
+\;\dot{y} = 6x - y
+\end{cases}%
+\iff\quad%
+\mqty(\dot{x}\\\dot{y}) = \mqty(0&1\\6&-1)\mqty(x\\y)
+\]
+Es decir, $\dot{z} = Az$ donde $A \coloneq \smqty(0&1\\6&-1)$. El polinomio característico de $A$ es:
+\[
+p_A(\lambda) = \lambda(\lambda+1) - 6 = \lambda^2 + \lambda - 6 = (\lambda+3)(\lambda-2)
+\]
+así que sus valores propios son $\lambda_1 = 2$, $\lambda_2 = -3$. Por el \myref{teo:distinct}:
+\begin{align*}
+e^{At} &= \frac{e^{2t} - e^{-3t}}{5}A + \frac{2e^{-3t} + 3e^{2t}}{5}I \\
+&= \frac15\mqty(3e^{2t} + 2e^{-3t} & e^{2t} - e^{-3t} \\ 6(e^{2t} - e^{-3t}) & -(e^{2t} - e^{-3t}) + 3e^{2t} + 2e^{-3t}) \\
+&= \frac15\mqty(3e^{2t} + 2e^{-3t} & e^{2t} - e^{-3t} \\ 6e^{2t} - 6e^{-3t} & 2e^{2t} + 3e^{-3t})
+\end{align*}
+por lo tanto, la solución homogénea para la condición inicial $x_h(t_0) = x_0$, $\dot{x}_h(t_0) = y_0$ es
+\begin{align*}
+x_h(t)%
+&= \frac15\left(\big(3e^{2(t-t_0)} + 2e^{-3(t-t_0)}\big)x_0 + \big(e^{2(t-t_0)} - e^{-3(t-t_0)}\big)y_0\right)\\
+&= \frac15\left(e^{2(t-t_0)}\big(3x_0 + y_0\big) + e^{-3(t-t_0)}\big(2x_0 - y_0\big)\right)
+\end{align*}
+
+\emph{Encontremos una solución particular}:\\
+Para el término $\sin t$, proponemos $x_{p1}(t) = a\cos t + b\sin t$. Sustituyendo en $\ddot{x} + \dot{x} - 6x = \sin t$:
+\[
+(-a\cos t - b\sin t) + (-a\sin t + b\cos t) - 6(a\cos t + b\sin t) = \sin t
+\]
+agrupando términos:
+\[
+(-a + b - 6a)\cos t + (-b - a - 6b)\sin t = (-7a + b)\cos t + (-a - 7b)\sin t
+\]
+Igualando coeficientes:
+\[
+\begin{cases}
+-7a + b = 0 \\
+-a - 7b = 1
+\end{cases}
+\implies\quad 
+a = -\tfrac{1}{10},\quad b = -\tfrac{7}{10}
+\]
+Por tanto, $x_{p1}(t) = -\tfrac{1}{10}\cos t - \tfrac{7}{10}\sin t$.
+
+Para el término $te^{2t}$, como $e^{2t}$ es solución de la homogénea (corresponde a $\lambda=2$), proponemos $x_{p2}(t) = t(at+b)e^{2t} = (at^2+bt)e^{2t}$. Calculamos:
+\begin{align*}
+\dot{x}_{p2} &= (2at + b)e^{2t} + 2(at^2 + bt)e^{2t} = (2at^2 + (2a+2b)t + b)e^{2t} \\
+\ddot{x}_{p2} &= (4at + 2a + 2b)e^{2t} + 2(2at^2 + (2a+2b)t + b)e^{2t} = (4at^2 + (8a+4b)t + (2a+4b))e^{2t}
+\end{align*}
+Sustituyendo en $\ddot{x} + \dot{x} - 6x = te^{2t}$ y dividiendo por $e^{2t}$:
+\[
+\big(4at^2 + (8a+4b)t + (2a+4b)\big) + \big(2at^2 + (2a+2b)t + b\big) - 6\big(at^2+bt\big) = t
+\]
+Simplificando:
+\[
+(4a+2a-6a)t^2 + \big((8a+4b)+(2a+2b)-6b\big)t + (2a+4b)+b = t
+\]
+\[
+(10a)t + (2a+5b) = t
+\]
+Igualando coeficientes: $10a = 1 \Rightarrow a = \tfrac{1}{10}$, $2a+5b = 0 \Rightarrow b = -\tfrac{1}{25}$.
+
+Luego $x_{p2}(t) = (\tfrac{1}{10}t^2 - \tfrac{1}{25}t)e^{2t}$. Por superposición, 
+\[
+x_p(t) = x_{p1}(t) + x_{p2}(t) = -\tfrac{1}{10}\cos t - \tfrac{7}{10}\sin t + (\tfrac{1}{10}t^2 - \tfrac{1}{25}t)e^{2t}
+\]
+Por lo tanto, la solución general para la EDO no homogénea es:
+\[
+\varphi(t,t_0,x_0,y_0) = \tfrac15\left(e^{2(t-t_0)}\big(3x_1 + y_1\big) + e^{-3(t-t_0)}\big(2x_1 - y_1\big)\right) - \tfrac{1}{10}(\cos t + 7\sin t) + (\tfrac{1}{10}t^2 - \tfrac{1}{25}t)e^{2t}
+\]
+con $x_1 = x_0 - x_p(t_0)$ y $y_1 = y_0 - \dot{x}_p(t_0)$.
+\end{enumerate}
+\end{sol}
+
+%------------- Ejercicio 3 ------------
+\begin{ejer}
+Usando el método de variación de constantes hallar una solución para
+\[
+\ddot{x} + x = \frac{1}{\cos t}
+\]
+y presentar la solución general, observando que la EDO
+está definida para $t \en \left(-\tfrac{\pi}{2}, \tfrac{\pi}{2}\right)$.
+\end{ejer}
+\begin{sol}
+La ecuación homogénea $\ddot{x} + x = 0$ tiene solución general:
+\[
+x_h(t) = x_0 \cos(t-t_0) + y_0 \sin(t-t_0)
+\]
+para la condición inicial $x_h(t_0) = x_0$, $\dot{x}_h(t_0) = y_0$.\par\vspace{1em}
+\emph{Encontremos una solución particular con variación de parámetros}:\\
+Proponemos una solución particular de la forma:
+\[
+x_p(t) = u_1(t)\cos t + u_2(t)\sin t
+\]
+con la condición:
+\[
+\dot{u}_1(t)\cos t + \dot{u}_2(t)\sin t = 0
+\]
+Notemos que la EDO no homogénea esta definida en $(-\frac{\pi}{2}, \frac{\pi}{2})$, así que buscamos una solución definida en un intervalo contenido en este.
+Calculemos las derivadas:
+\[
+\dot{x}_p(t) = -u_1(t)\sin t + u_2(t)\cos t + \underbrace{\dot{u}_1(t)\cos t + \dot{u}_2(t)\sin t}_{=0}
+\]
+\[
+\dot{x}_p(t) = -u_1(t)\sin t + u_2(t)\cos t
+\]
+\[
+\ddot{x}_p(t) = -u_1(t)\cos t - u_2(t)\sin t - \dot{u}_1(t)\sin t + \dot{u}_2(t)\cos t
+\]
+Sustituyendo en la EDO $\ddot{x} + x = \frac{1}{\cos t}$, obtenemos
+\[
+[-u_1(t)\cos t - u_2(t)\sin t - \dot{u}_1(t)\sin t + \dot{u}_2(t)\cos t] + [u_1(t)\cos t + u_2(t)\sin t] = \frac{1}{\cos t}
+\]
+o bien, simplificando,
+\[
+- \dot{u}_1(t)\sin t + \dot{u}_2(t)\cos t = \frac{1}{\cos t}
+\]
+Por lo tanto, llegamos al siguiente sistema de ecuaciones lineales con incógnitas $\dot{u}_1(t)$ y $\dot{u}_2(t)$
+\[
+\begin{cases}
+\dot{u}_1(t)\cos t + \dot{u}_2(t)\sin t = 0 \\
+- \dot{u}_1(t)\sin t + \dot{u}_2(t)\cos t = \frac{1}{\cos t}
+\end{cases}
+\]
+Resolvemos el sistema usando la regla de Cramer. El determinante de la matriz de coeficientes es:
+\[
+W = \begin{vmatrix}
+\cos t & \sin t \\
+-\sin t & \cos t
+\end{vmatrix} = \cos^2 t + \sin^2 t = 1
+\]
+entonces soluciones son:
+\[
+\dot{u}_1(t) = \frac{\begin{vmatrix}
+0 & \sin t \\
+\frac{1}{\cos t} & \cos t
+\end{vmatrix}}{1} = -\frac{\sin t}{\cos t} = -\tan t
+\]
+\[
+\dot{u}_2(t) = \frac{\begin{vmatrix}
+\cos t & 0 \\
+-\sin t & \frac{1}{\cos t}
+\end{vmatrix}}{1} = \frac{1}{\cos t} \cdot \cos t = 1
+\]
+Integramos para encontrar $u_1(t)$ y $u_2(t)$:
+\[
+u_1(t) = -\int \tan t \, dt = -\int \frac{\sin t}{\cos t} \, dt = \ln|\cos t| + K_1
+\]
+\[
+u_2(t) = \int 1 \, dt = t + K_2
+\]
+Pero $t \en (-\frac\pi2, \frac\pi2)$, entonces $\cos(t)>0$ y $u_1(t) = \ln(\cos t)$. Como solo buscamos una solución particular, podemos tomar $K_1 = K_2 = 0$. Luego
+\[
+x_p(t) = \ln(\cos t)\cos t + t\sin t%
+\quad\text{y}\quad%
+\dot{x}_p(t) = -\ln(\cos t)\sin t + t\cos t
+\]
+Se sigue que la solución general de la EDO no homogénea es:
+\[
+x(t) = x_1 \cos(t-t_0) + y_1 \sin(t-t_0) + \ln(\cos t)\cos t + t \sin t
+\]
+definida para $t \en \left(-\tfrac{\pi}{2}, \tfrac{\pi}{2}\right)$ y donde 
+\begin{align*}
+x_1 = x_0 - x_p(t_0) = x_0 - \ln(\cos t_0)\cos t_0 - t_0 \sin t_0\\
+y_1 = y_0 - \dot{x}_p(t_0) = y_0 + \ln(\cos t_0)\sin t_0 - t_0\cos t_0  
+\end{align*}
+para una condición inicial $x(t_0) = x_0$, $\dot{x}(t_0) = y_0$.
+\end{sol}
+
+%------------- Ejercicio 4 ------------
+\begin{ejer}
+Sea $A$ una matriz real $n \times n$, y $\lambda \en \mathbb{C}$ una raíz compleja no real de su polinomio característico, es decir, $\lambda = a + ib$ con $b \neq 0$.
+\begin{enumerate}[label = (\alph*)]
+\item Justificar la existencia de un vector $u \en \mathbb{C}^n$ tal que $Au = \lambda u$.
+
+\item Si $u = v_1 + i v_2$ con $v_1, v_2 \en \mathbb{R}^n$, hallar $Av_1$ y $Av_2$.
+
+\item Concluir que $v_1$ y $v_2$ son linealmente independientes, y que generan un subespacio $S \subset \mathbb{R}^n$ que es invariante para la matriz $A$. Hallar la matriz $2 \times 2$ asociada a la restricción a $S$ de $T_A(v) = Av$.
+
+\item ¿Qué pasa si en la forma canónica de $A$ como matriz de $M_n(\mathbb{C})$
+hay un bloque asociado a un valor propio $\lambda$ no real, tal que en la superdiagonal los valores son $1$? Describir explícitamente la forma canónica real asociada para el caso $n = 4$ y $\lambda = a + ib$, con $b \neq 0$, valor propio cuya multiplicidad geométrica es $1$ y su multiplicidad algebraica es $2$. Se debe justificar que en cierta base de $\mathbb{R}^4$ la transformación $T_A(v) = Av$ tiene como matriz asociada la matriz
+\[
+J =
+\mqty(
+a & b & 1 & 0 \\
+-b & a & 0 & 1 \\
+0 & 0 & a & b \\
+0 & 0 & -b & a
+).
+\]
+
+\item Hallar la exponencial $e^{tJ}$ para esta matriz $J$.
+\end{enumerate}
+\end{ejer}
+\begin{sol}
+\begin{enumerate}[leftmargin=*, label=(\alph*)]
+\item La matriz $A$ se puede ver como elemento de $M_n(\mathbb{C})$: de este modo, como $\lambda$ es raíz del polinomio característico, se sigue que $\det(\lambda I - A) = 0$ así que $\lambda I - A \en M_n(\mathbb{C})$ no es invertible y $\ker(\lambda I - A) > \set{0}$. Luego, existe $u \en \ker(\lambda I - A)/\set{0}$, por lo que $0 = (\lambda I - A)u = \lambda u - Au$ y $Au = \lambda u$.
+
+\item Por un lado, la linealidad implica $Au = A(v_1 + iv_2) = Av_1 + iAv_2$ con $Av_1, Av_2 \en \mathbb{R}^n$; por otro lado, la distributividad implica que 
+\[
+Au = \lambda u = (a + ib)(v_1 + iv_2) = av_1 + iav_2 + ibv_1 - bv_2 = \smash{{\underbrace{(av_1 - bv_2)}_{\en\mathbb{R}^n}} + {i\underbrace{(bv_1 + av_2)}_{\en\mathbb{R}^n}}} 
+\]
+igualando parte real e imaginaria, obtenemos que 
+\begin{gather}\label{eq:ig}
+Av_1 = av_1 - bv_2%
+\quad\text{y}\quad%
+Av_2 = bv_1 + av_2
+\end{gather}
+
+\item Probemos por contradicción que $\set{v_1,v_2}$ es linealmente independiente en $\mathbb{R}$: si existiera $t \en \mathbb{R}$ con $v_2 = tv_1$ entonces tendríamos
+\[
+Av_2 = tAv_1 = t(av_1 - bv_2) = t(av_1 -tb v_1) = (ta-t^2b)v_1
+\]
+al mismo tiempo que
+\[
+Av_2 = bv_1 + av_2 = bv_1 + tav_1 = (b + ta)v_1
+\]
+De esto se sigue que $ta - t^2b = ta + b$, es decir, $-t^2b = b$, pero $b \neq0$, así que $-t^2 = 1$. Esto es absurdo, pues $t \en \mathbb{R}$ así que $-t^2 \leq 0$. El error estuvo en suponer que $\set{v_1,v_2}$ es l.d. por lo que forzosamente es l.i.\par
+Ahora bien, si definimos $S \coloneq \mathcal{L}(v_1,v_2)$, las igualdades en \eqref{eq:ig} implican que $Av_1,Av_2 \en S$ por lo que $T_A(S) \leq S$, i.e., $S$ es $A\text{-invariante}$. Más aún, las igualdades de \eqref{eq:ig} muestran que la matriz asociada a $T_A|_S \colon S \to S$ en la base $(v_1,v_2)$ es
+\[
+[T_A]_{(v_1,v_2)} = \mqty([T_A(v_1)]_{(v_1,v_2)}&[T_A(v_2)]_{(v_1,v_2)}) = \mqty(a&b\\-b&a)
+\]
+
+\item Supongamos que $A$ tiene un bloque de Jordan $J_m(\lambda)$. De este modo, existe un subespacio $A\text{-invariante}$ $S \leq \mathbb{C}^n$ asociado a $J_m(\lambda)$, i.e., tal que $T_A|_S \sim J_m(\lambda)$ (donde $T_A$ en este caso es operador de $\mathbb{C}^n$), por lo que existe una base $(u^{1},\dots,u^{m})$ de $S$ que cumple
+\[
+T_A|_S = PJ_m(\lambda)P^{-1}%
+\quad\text{donde}\quad%
+P = \mqty(u^{1}&\cdots&u^{m})
+\]
+Luego, para cada $k \en \set{1,\dots,m}$,
+\[
+Au^{k}%
+= PJ_m(\lambda)P^{-1}u^{k} = PJ_m(\lambda)e_k
+\]
+donde $e_i$ es el $i\text{-ésimo}$ vector canónico, pero $J_m(\lambda)e_i$ es la $i\text{-ésima}$ columna de $J_m(\lambda)$. Se sigue
+\begin{align}
+Au^{1} &= PJ_m(\lambda)e_1 = P(\lambda e_1) = \lambda u^{1}\\
+Au^{k} &= PJ_m(\lambda)e_k = P(\lambda e_k + e_{k-1}) = \lambda u^{k} + u^{k-1}%
+\quad\text{con}\quad%
+k \en \set{2,\dots,m}
+\end{align}
+Ahora pongamos $u^{k} = v^k_1 + iv^k_2$ con $v^k_1,v^k_2 \en \mathbb{R}^n$, para cada $k \en \set{1,\dots,m}$. Ya vimos en los incisos anteriores que $Av^1_1 = av^1_1 - bv^1_2$ y $Av^1_2 = bv^1_1 + av^1_2$. Además, similar a (b) se tiene que
+\begin{align*}
+Av^k_1 + iAv^k_2 &= Au^k = \lambda u^{k} + u^{k-1} = (a + ib)(v^k_1 + iv^k_2) + v^{k-1}_1 + iv^{k-1}_2\\
+&= (av^k_1 - bv^k_2 + v^{k-1}_1) + i(bv^k_1 + av^k_2 + v^{k-1}_2),%
+\qquad k\en\set{2,\dots,m}
+\end{align*}
+De esto se sigue, igualando partes reales e imaginarias, que se cumplen las relaciones
+\begin{equation}\label{eq:rel}
+\begin{aligned}
+Av^1_1 &= av^1_1 - bv^1_2\\
+Av^1_2 &= bv^1_1 + av^1_2\\
+Av^2_1 &= av^2_1 - bv^2_2 + v^{1}_1\\
+Av^2_2 &= bv^2_1 + av^2_2 + v^{1}_2\\
+       &\vdotswithin{=}\\
+Av^m_1 &= av^m_1 - bv^m_2 + v^{m-1}_1\\
+Av^m_2 &= bv^m_1 + av^m_2 + v^{m-1}_2
+\end{aligned}
+\end{equation}
+\clearpage
+\emph{A partir de aquí, volvamos a trabajar en $\mathbb{R}^n$}:\\
+Es sencillo convencerse%
+\footnote{%
+    Como $A$ tiene coeficientes reales y $\lambda$ es raíz compleja de $p_A$, se sigue que $\ubar{\lambda}$ es también raíz de $p_A$; más aún, la forma canónica de Jordan de $A$ tiene un bloque $J_m(\ubar{\lambda})$ cuya base asociada es $(\ubar{u}^1,\dots,\ubar{u}^m)$, por lo cual, el teorema de descomposición primaria implica que los subespacios $\mathcal{L}(u^1,\dots,u^m)$ y $\mathcal{L}(\ubar{u}^1,\dots,\ubar{u}^m)$ tienen intersección trivial. De esto se sigue que $\mathcal{B}' \coloneq (u^1,\ubar{u}^1,\dots,u^m,\ubar{u}^m)$ es l.i. y quedamos a un paso de probar que $\mathcal{B}$ también lo es: recordemos el hecho elemental de que $v^k_1 = \frac12(u^k + \ubar{u}^k)$ y $v^k_2 = \frac{1}{2i}(u^k - \ubar{u}^k)$, esto define (gracias a que $\mathcal{B}'$ es l.i.) una transformación lineal $T \colon \mathcal{L}(\mathcal{B}') \to \mathcal{L}(\mathcal{B}')$ que asigna $u_k \mapsto v^k_1 = \frac12(u^k + \ubar{u}^k)$ y $\ubar{u}^k \mapsto v^k_2 = \frac{1}{2i}(u^k - \ubar{u}^k)$. Se sigue inmediato de la definición de $T$ que $[T]_{\mathcal{B}'} = \mathrm{diag}(M_1,\dots,M_m)$ donde $M_k = \smqty(1/2&1/2i\\1/2&-1/2i)$, con $k \en \set{1,\dots,m}$; luego, $\det[T]_{\mathcal{B}'} = (\det M_1)^m = (-\nicefrac{1}{2i})^m \neq 0$ por lo que $T$ es isomorfismo. Un isomorfismo manda bases en bases, así que $\mathcal{B} = T(\mathcal{B}')$ es base de $\mathcal{L}(\mathcal{B})$ y, por tanto, es l.i.
+} %
+de que $\mathcal{B} = (v^1_1,v^1_2,\dots,v^m_1,v^m_2)$ es linealmente independiente; además, las relaciones anteriores muestran que $Av^k_i \en \mathcal{L}(\mathcal{B})$ para cada $i\en\set{1,2}$, $k\en\set{1,\dots,m}$, por lo cual, $R \coloneq \mathcal{L}(\mathcal{B})$ es un subespacio $A\text{-invariante}$ con base $\mathcal{B}$. Las igualdades en \eqref{eq:rel} implican que, al representar $T_A|_R$ (en este caso, $T_A$ es un operador de $\mathbb{R}^n$) en la base $\mathcal{B}$, obtenemos
+\[
+[T_A|_R]_\mathcal{B}%
+= \mqty(%
+P & I_2 & 0 & \cdots & 0 \\
+0 & P & I_2 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & I_2 \\
+0 & 0 & 0 & 0 & P
+)%
+\qquad\text{donde}\qquad%
+P = \mqty(a&b\\-b&a)
+\]
+Esto es una especie de "bloque de Jordan generalizado" con matrices $P$ en la diagonal y, en lugar de $1\text{'s}$, en la superdiagonal tiene matrices identidad $I_2 \en M_2(\mathbb{R})$. Este bloque puede remplazar a las apariciones de los bloques $J_m(\lambda)$ y $J_m(\ubar{\lambda})$ en la descomposición de Jordan compleja de $A$ y, de este modo, permite encontrar una forma canónica real para cualquier matriz de coeficientes reales. Esto se logra tomando la forma canónica de Jordan en los complejos, dejando los bloques asociados a valores propios reales sin alterar y cambiando aquellas parejas de bloques asociados a valores propios conjugados por los bloques generalizados como el visto arriba.\par\vspace{1em}
+\emph{Veamos el caso en $\mathbb{R}^4$}:\\
+Como $\lambda$ tiene multiplicidad algebraica 2 y $p_A$ tiene coeficientes reales, entonces $\ubar{\lambda}$ también es raíz doble de $p_A$, pero $p_A$ es de cuarto grado, por tanto $p_A(x) = (x-\lambda)^2(x-\ubar{\lambda})^2$. Por otro lado, el polinomio mínimo (que también tiene coeficientes reales) solo tiene dos opciones: o bien $m_A(x) = p_A$, o bien $m_A(x) = (x - \lambda)(x - \ubar{\lambda})$. El segundo caso implicaría que $A$ es diagonalizable, pero esto es imposible, ya que por hipótesis la multiplicidad geométrica de $\lambda$ es 1. Se sigue que $m_A = p_A$ y el tamaño máximo de los bloques de Jordan es 2. Por tanto,
+\[
+J_A = \mqty(%
+\lambda&   1   &      0     &     0    \\
+   0   &\lambda&      0     &     0    \\
+   0   &   0   &\ubar\lambda&     1    \\
+   0   &   0   &      0     &\ubar\lambda   
+)
+\]
+Luego, como vimos antes existe una base $(u^1,u^2)$ asociada al bloque $\smqty(\lambda&1\\0&\lambda)$, por lo que si ponemos $u^1 = v^1_1 + iv^1_2$ y $u^2 = v^2_1 + iv^2_2$ con $v^1_1,v^1_2,v^2_1,v^2_2\en\mathbb{R}^4$ entonces $\mathcal{B} = (v^1_1,v^1_2,v^2_1,v^2_2)$ es base de un subespacio de $\mathbb{R}^4$ $A\text{-invariante}$, por lo cual, tiene que ser base de $\mathbb{R}^4$. Más aún, ya vimos que tiene que satisfacer las siguientes igualdades tomadas de \eqref{eq:rel}:
+\[\begin{matrix}
+Av^1_1 &=& av^1_1 &-& bv^1_2 &+& 0 &+& 0\\[5pt]
+Av^1_2 &=& bv^1_1 &+& av^1_2 &+& 0 &+& 0\\[5pt]
+Av^2_1 &=& v^1_1 &+& 0 &+& av^2_1 &-& bv^2_2\\[5pt]
+Av^2_2 &=& 0 &+& v^1_2 &+& bv^2_1 &+& av^2_2
+\end{matrix}\]
+De esto se sigue que la representación de $T_A$ en la base $\mathcal{B}$ tiene de columnas los coeficientes de las últimas igualdades, i.e., $[T_A]_{\mathcal{B}} = \mqty([Av^1_1]_\mathcal{B} & [Av^1_2]_\mathcal{B} & [Av^2_1]_\mathcal{B} & [Av^2_2]_\mathcal{B})$ por lo que
+\[
+[T_A]_\mathcal{B}%
+= \mqty(%
+ a & b &  1 & 0 \\
+-b & a &  0 & 1 \\
+ 0 & 0 &  a & b \\
+ 0 & 0 & -b & a
+)
+\]
+Por lo tanto, $A = G[T_A]_\mathcal{B}G^{-1}$ donde $G \coloneq \mqty(v^1_1&v^1_2&v^2_1&v^2_2)$ es la matriz de cambio de base de la base canónica de $\mathbb{R}^4$ a $\mathcal{B}$.
+
+\item Denotemos, como en el inciso anterior, $P = \smqty(a&b\\-b&a)$. Luego, analizando $J$ por bloques $2\times2$,
+\[
+J = [T_A]_\mathcal{B} =\operatorname{diag}(P,P) + Q%
+\quad\text{con}\quad%
+Q = \mqty(0&I_2\\0&0)
+\]
+Se sigue, por propiedades de la exponencial, que $e^{tJ} = e^{t\operatorname{diag}(P,P) + tQ} = e^{t\operatorname{diag}(P,P)}e^{tQ}$. Ahora bien, por un lado es sencillo ver que $Q^2 = 0$, por lo que $Q^k = 0$ para cada $k \geq 2$ y
+\[
+e^{tQ} = \sum^\infty_{k=0}\frac{t^kQ^k}{k!} = I_4 + tQ%
+\quad\implies\quad%
+e^{tJ} = e^{t\operatorname{diag}(P,P)}(I_4 + tQ)
+\]
+Por otro lado, es un resultado bien conocido que las matrices diagonales por bloques se operan bloque por bloque. Por tanto, $\operatorname{diag}(P,P)^k = \operatorname{diag}(P^k,P^K)$ y 
+\[
+e^{t\operatorname{diag}(P,P)}%
+= \sum^\infty_{k=0}\frac{t^k\operatorname{diag}(P,P)^k}{k!}%
+= \sum^\infty_{k=0}\frac{t^k\operatorname{diag}(P^k,P^k)}{k!}%
+= \operatorname{diag}\left(%
+    \sum^\infty_{k=0} \frac{t^kP^k}{k!},%
+    \sum^\infty_{k=0} \frac{t^kP^k}{k!}
+\right)%
+= \operatorname{diag}(e^{tP}, e^{tP})
+\]
+No obstante, ya vimos en la prueba del \cref{teo:complex}, que $P = aI_4 + bC$ donde $C = \smqty(0&1\\-1&0)$ y
+\[
+e^{tP}%
+= e^{at}\big(%
+    \cos(bt)I_4 + \sin(bt)C
+\big)%
+= e^{at}\mqty(\cos(bt)&\sin(bt)\\-\sin(bt)&\cos(bt))
+\]
+Finalmente,
+\[
+e^{tJ}%
+= \operatorname{diag}(e^{tP},e^{tP})(I_4 + tQ)%
+=\mqty(e^{tP}&0\\0&e^{tP}) + t\mqty(e^{tP}&0\\0&e^{tP})\mqty(0&I_2\\0&0) = \mqty(e^{tP}&te^{tP}\\0&e^{tP})%
+\]
+y
+\[
+e^{tJ}%
+= e^{at}\mqty(%
+ \cos(bt)& \sin(bt)& t\cos(bt)&t\sin(bt)\\
+-\sin(bt)& \cos(bt)&-t\sin(bt)&t\cos(bt)\\
+    0    &    0    &  \cos(bt)& \sin(bt)\\
+    0    &    0    & -\sin(bt)& \cos(bt)%
+)%\qedhere
+\]
+\end{enumerate}
+\end{sol}

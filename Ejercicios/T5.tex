@@ -1,0 +1,122 @@
+%------------------------------ Ejercicio 1 -------------------------------
+\begin{ejer}
+Sea $X : \mathbb{R}^n \to \mathbb{R}^n$ un campo de clase $C^1$.
+\begin{enumerate}[label=(\alph*)]
+\item Probar que el conjunto límite de una solución definida para todo $t > 0$ y acotada en el futuro es conexo.
+
+\item Dar un campo de vectores en $\mathbb{R}^2$ explícitamente de modo que alguna órbita tenga conjunto $\omega\text{-límite}$ disconexo.
+
+\item Probar que si $q \en \omega(p)$ entonces la solución maximal por $q$ está definida en $\mathbb{R}$.
+
+\item Probar que si $q \en \omega(p)$ entonces toda la órbita de $q$ está contenida en $\omega(p)$.
+
+\item Probar que para un flujo irracional en $T^2$ el $\omega\text{-límite}$ de cualquier punto es todo $T^2$.
+\end{enumerate}
+\end{ejer}
+\begin{sol}
+\begin{enumerate}[label=\textbf{(\alph*)}]
+
+\item\addcontentsline{toc}{subsection}{Inciso (a)}
+Supongamos por contradicción que $\omega(p)$ es disconexo. Entonces existen abiertos disjuntos $U,V\subseteq\mathbb{R}^n$ tales que
+\[
+\omega(p)\cap U\neq\varnothing,%
+\qquad \omega(p)\cap V\neq\varnothing,%
+\qquad \omega(p)\subseteq U\cup V
+\]
+
+
+En particular, existen $u\en\omega(p)\cap U$ y $v\en\omega(p)\cap V$ así que, por definición de $\omega$-límite, existen sucesiones $t_n\to\infty$ y $s_n\to\infty$ tales que 
+\[
+\phi(t_n,p) \xrightarrow{n\to\infty} u
+\quad\text{y}\quad
+\phi(s_n,p) \xrightarrow{n\to\infty} v
+\]
+Como $t_n\to\infty$ y $s_n\to\infty$ podemos extraer subsucesiones y reindexarlas de modo que queden intercaladas
+\[t_1<s_1<t_2<s_2<\cdots\]
+y cumplan $\phi(t_n,p)\en U$, $\phi(t_n,p)\en V$ para todo $n\en\mathbb{N}$
+
+Una forma explícita de obtener esto es la siguiente: como $U$ es entorno de $u$ y $\phi(t_n,p) \to u$, existe $N_1 \en \mathbb{N}$ tal que $\phi(t_n,p) \en U$ para cada $n \geq N_1$; de forma similar, existe $N_2$ tal que $\phi(s_n,p) \en V$ para cada $n\geq N_2$. Entonces tomamos $N \coloneq \max\set{N_1,N_2}$ y $t'_1 \coloneq t_{N}$; luego, como $s_n\to\infty$ existe $n_1>N$ tal que $s_{n_1}>t'_1$, así que tomamos $s'_1:=s_{n_1}$; después, como $t_n\to\infty$ existe $m_1>n_1$ tal que $t_{m_1}>s'_1$, así que tomamos $t'_1:=t_{m_1}$. Repitiendo inductivamente se obtienen subsucesiones intercaladas con la propiedad anterior (por simplicidad las nombramos simplemente por $t_n$ y $s_n$).
+
+Ahora para cada $n$ considere el intervalo $I_n=[t_n,s_n]$. La imagen continua $\phi(I_n,p)$ es un subconjunto conexo de $\mathbb{R}^n$ que contiene a $\phi(t_n)\en U$ y a $\phi(s_n)\en V$, dos conjuntos abiertos y disjuntos; por conectividad de $\phi(I_n)$ debe existir un tiempo $r_n\en(t_n,s_n)$ con
+\[\phi(r_n,p)\noten U\cup V\]
+La sucesión $\{\phi(r_n,p)\}$ está contenida en la órbita de $p$, la cual es por hipótesis acotada, luego $\{\phi(r_n,p)\}$ es acotada y posee un punto de acumulación $q$. Dado que $r_n\to\infty$ (puesto que $t_n,s_n\to\infty$), cualquier punto de acumulación de $\{\phi(r_n,p)\}$ pertenece a $\omega(p)$, por tanto $q\en\omega(p)$. Pero por construcción $\phi(r_n,p)\noten U\cup V$ para todo $n$, de modo que $q\noten U\cup V$. Esto contradice $\omega(p)\subseteq U\cup V$. Concluimos que $\omega(p)$ es conexo.
+
+\item\addcontentsline{toc}{subsection}{Inciso (b)}
+En coordenadas polares $(r,\theta)$ consideremos el sistema
+\[
+\dot r = 1, \qquad \dot\theta = 1.
+\]
+Sus soluciones son
+\[
+r(t)=r_0+t,\qquad \theta(t)=\theta_0+t,
+\]
+es decir, espirales arquimedianas que giran con velocidad constante y cuyo radio crece linealmente. Al pasar a coordenadas cartesianas usando $x=r\cos\theta$, $y=r\sin\theta$, se obtiene el campo
+\[
+F_0(x,y) = \left( \frac{x}{r} - y ,\; \frac{y}{r} + x \right), \qquad r=\sqrt{x^2+y^2}.
+\]
+Este campo está definido en $\mathbb{R}^2\setminus\set0$, pero podemos forzar $F_0(0,0)=(0,0)$ agregando al origen como punto de equilibrio.
+
+
+Ahora consideramos una \emph{bump function} $\rho:\mathbb{R}\to[0,1]$ tal que
+\[
+\rho(y)=1 \text{ si } |y|\le \tfrac12, \qquad \rho(y)=0 \text{ si } |y|\ge 1.
+\]
+Definimos el nuevo campo
+\[
+F(x,y)=\big(F_0^1(x,y),\; \rho(y)\,F_0^2(x,y)\big).
+\]
+Con esto, la componente horizontal del movimiento se conserva, pero la vertical se anula gradualmente al acercarse a $|y|=1$. Notemos que la banda
+\[
+B=\{(x,y):|y|<1\}
+\]
+es la región donde actúa la componente vertical del movimiento. Al aproximarse a $y=\pm1$, la función $\rho(y)$ tiende a $0$, de modo que el movimiento vertical se detiene y la órbita se mueve casi horizontalmente, hasta que finalmente, en $\abs{y} \geq 1$, el flujo es totalmente horizontal así que las soluciones son rectas horizontales. En particular, las siguientes rectas son soluciones
+\[
+L_1=\set*{(x,y)\en\mathbb{R}^2 \given y=1},\qquad L_2=\set*{(x,y)\en\mathbb{R}^2 \given y=-1}
+\]
+
+
+\emph{Analicemos cualitativamente por qué $L_1 \cup L_2$ es $\omega$-límite de cualquier punto en $B$}:\\
+Tomemos un punto inicial $p=(x_0,y_0)$ con $|y_0|<1$ y con $r_0$ grande.  
+La órbita gira alrededor del origen como una espiral. En cada vuelta cruza la banda $B$ en regiones donde la componente vertical es positiva o negativa según el signo de $F_0^2$, lo cual la empuja hacia arriba o hacia abajo.
+
+Debido a esta oscilación vertical y al hecho de que la velocidad vertical disminuye al acercarse a $y=\pm 1$, la órbita efectivamente se acerca arbitrariamente cerca de $L_1$ infinitas veces, lo mismo ocurre para $L_2$ por un argumento análogo. Esto sugiere que $L_1\cup L_2 \subseteq \omega(p).$.
+
+Recíprocamente, es sencillo notar que ningún punto con $\abs{y} > 1$ está en $\omega(p)$, pues para aproximarse a él, la órbita de $p$ tendría que cruzar a $L_1$ o $L_2$, lo cual es imposible por la unicidad de las soluciones. Además, para cualquier punto con $\abs{y} < 1$ tenemos que la órbita de $p$ al verse similar a una espiral achatada, al trazar una recta del origen hasta $q$, tenemos que cada que la órbita de $p$ cruce dicha recta, lo hará en un punto más lejano, haciendo imposible acumularse en $q$. Con ello concluimos:
+\[
+\omega(p)=L_1\cup L_2,
+\]
+que es un conjunto disconexo.
+
+\item\addcontentsline{toc}{subsection}{Inciso (c)}
+Por el contra ejemplo visto en clase, sabemos que es necesario asumir que la órbita de $p$ es acotada para poder demostrar este inciso. 
+
+Sea $\phi_q$ la solución maximal que pasa por $q \en \omega(p)$. Ya sabemos que $\omega(p)$ es compacto y probaremos en el siguiente inciso (sin hacer uso del presente resultado) que está contenida en $\omega(p)$. Si el intervalo dominio de $\phi_q$ fuera acotado, por el teorema de escape de compactos, la solución escaparía de $\omega(p)$, lo que sería una contradicción. Luego, tiene que estar definida en todo $\mathbb{R}$.
+
+\item\addcontentsline{toc}{subsection}{Inciso (d)}
+Sea $r = \phi(t,q)$ un punto en la órbita de $q$. Existe una sucesión $t_n \to \infty$ tal que $\phi(t_n,p) \to q$. Por continuidad del flujo:
+\[
+\phi(t_n + t,p) = \phi(t,\phi(t_n,p)) \to \phi(t,q) = r
+\]
+Por tanto, $r \en \omega(p)$.
+
+\item\addcontentsline{toc}{subsection}{Inciso (e)} 
+Sea $\varphi_t$ el flujo en $T^2=\mathbb R^2/\mathbb Z^2$ generado por $v=(\alpha,\beta)$ con $\alpha\neq0$ y $\beta/\alpha\notin\mathbb Q$. Entonces
+\[
+\varphi_t(x,y)=(x+\alpha t,\;y+\beta t)\pmod{\mathbb Z^2}.
+\]
+Fijado $x\en \mathbb R/\mathbb Z \cong S^1$ consideramos la sección transversal vertical
+\[
+\Sigma_x=\{x\}\times \mathbb R/\mathbb Z.
+\]
+Los tiempos $t\ge0$ en que una órbita vuelve a $\Sigma_x$ son aquellos con $\alpha t\en\mathbb Z$. El primer tiempo positivo de retorno es $t_0=1/\alpha$, y el mapa de primera retorno
+$R_x:\Sigma_x\to\Sigma_x$ se escribe
+\[
+R_x(x,y)=\big(x,y+\beta t_0\big)\equiv (x,y+\tfrac{\beta}{\alpha})\pmod{\mathbb Z^2}
+\]
+Es decir, si identificamos mediante la exponencial compleja\footnote{Esto es, mediante el mapeo $(x,y) \mapsto (e^{ix},e^{iy})$.} $\Sigma_x \cong S^1$, tenemos que $R_x$ es la rotación del círculo por el ángulo $\beta/\alpha$. Por hipótesis $\beta/\alpha$ es irracional, luego la rotación tiene órbitas densas en $S^1$. Por tanto si fijamos $(x_0,y_0) \en T^2$ tenemos que, para cada $(x,y) \en T^2$,
+\[
+\set{\varphi_{(n+x-x_0)/\alpha}(x_0,y_0) \given n\en \mathbb{N}}
+\]
+es denso en $\Sigma_{x}$ (pues $\varphi_{(n+x-x_0)/\alpha}(x_0,y_0) = \varphi_{n/\alpha}(x,y_0)$). En particular, existe una subsucesión $t(n)$ de $n$ (así que forzosamente $t(n) \to \infty$) tal que $\varphi_{(t(n)+x-x_0)/\alpha}(x_0,y_0) \to (x,y) \en \Sigma_x$. Como $(x,y) \en T^2$ es arbitrario y la sucesión $(t(n)+x-x_0)/\alpha$ diverge propiamente a infinito, se sigue que $\omega(x_0,y_0) = T^2$.
+\end{enumerate}
+\end{sol}

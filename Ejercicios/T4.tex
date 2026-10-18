@@ -1,0 +1,445 @@
+%------------------------------------- Ejercicio 1 -----------------------------------
+\begin{ejer}
+Sea $V$ un espacio vectorial de dimensión finita. Probar que si $\norm{\cdot}_1$ y $\norm{\cdot}_2$ son dos normas en $V$, entonces existe una constante $C \en \mathbb{R}$ tal que para todo $v \en V$ se cumple $\norm{v}_1 \leq C \norm{v}_2$.
+\end{ejer}
+\begin{sol}[Demostración]
+Sea $\mathcal{B} = \set{b_1,\dots,b_n}$ una base para $V$, esta base induce un isomorfismo $T \colon V \to \mathbb{F}^n$. Luego, consideremos la norma $\norm{\cdot}'$ en $V$ inducida mediante $T$ por $(\mathbb{F}^n, \norm{\cdot})$, donde $\norm{\cdot}$ es la norma del taxista, es decir, se define como $\norm{v}' \coloneq \norm{T(v)}$; por lo tanto, si $v = \sum^n_{i=1}v_ib_i$, entonces 
+\[
+\norm{v}' = \norm{T(v)} = \norm{v_1,\dots,v_n} = \sum^n_{i=1} \abs{v_i}
+\]
+Con esta norma inducida, $T \colon (V,\norm{\cdot}') \to (\mathbb{F}^n,\norm{\cdot})$ es un isomorfismo isométrico. Luego, definimos
+\[
+M_1 \coloneq \max_{\mathclap{i=1,\dots,n}} \norm{b_i}_1%
+\quad\text{y}\quad
+M_2 \coloneq \max_{\mathclap{i=1,\dots,n}} \norm{b_i}_2%
+\]
+Entonces se cumple que, para cada $v \en V$ con $v = \sum^n_{i=1} v_ib_i$,
+\[
+\norm{v}_k%
+\leq \norm\Big{\sum^{n}_{i=1} v_ib_i}{\vphantom{\sum}}_k%
+\leq \sum^n_{i=1} \abs{v_i}\cdot\norm{b_i}_k%
+\leq M_k \sum^n_{i=1} \abs{v_i}%
+= M_k \norm{v}',
+\quad\forall k\en\set{1,2}
+\]
+Esto prueba que $\norm{\cdot}_1,\norm{\cdot}_2 \colon (V,\norm{\cdot}') \to (\mathbb{R},\abs{\cdot})$ son Lipschitz, ya que se tiene para cada $v_1,v_2 \en V$
+\[
+\abs\big{\norm{v_1}_k - \norm{v_2}_k}%
+\leq \norm{v_1 - v_2}_k%
+\leq M_k \norm{v_1-v_2}',%
+\quad\forall k\en\set{1,2}
+\]
+en particular, son continuas. Por otro lado, sabemos que $S \coloneq \set*{x \en \mathbb{F}^n \given \norm{x} = 1}$ es compacto en $(\mathbb{F}^n,\norm{\cdot})$ así que ---gracias a que $T^{-1}$ es continua--- $S' \coloneq T^{-1}(S)$ también es compacto en $(V, \norm{\cdot}')$ (nótese que $S' = \set{v \en V \given \norm{v}'4 = 1}$); de esto se sigue, por la continuidad de $\norm{\cdot}_2$, que existe $m \coloneq \min\set*{\norm{v}_2 \given v \en S'} > 0$. Ahora bien, esto implica que si $v \en V-\set0$ entonces 
+\[
+\hat{v} \coloneq \frac{v}{\norm{v}'} \en S'%
+\quad\implies\quad%
+m \leq \norm{\hat{v}}_2%
+\quad\implies\quad%
+m\norm{v}' \leq \norm{\hat{v}}_2\norm{v}' = \norm{v}_2
+\]
+Esto también se satisface para $v=0$, así que $m\norm{v}' \leq \norm{v}_2$ para todo $v \en V$. Finalmente, se tiene
+\[
+\norm{v}_1 \leq M_1\norm{v}' = \frac{M_1}{m}(m\norm{v}') \leq \frac{M_1}{m} \norm{v}_2,
+\quad\forall v \en V
+\]
+Esto completa la prueba tomando $C = \frac{M_1}{m}$.
+\end{sol}
+
+%------------------------------------- Ejercicio 2 -----------------------------------
+\begin{ejer}
+Si $\mathcal{M}_n = \mathcal{M}_n(\mathbb{R})$ es el espacio vectorial (de dimensión $n^2$) de las matrices $n \times n$ a coeficientes reales, probar que $\norm{\cdot} \colon \mathcal{M}_n \to [0, +\infty)$ definida por
+\[
+\norm{A} = \sup \set*{ \norm{Av} \given v \en \mathbb{R}^n, \norm{v} = 1 }
+\]
+es una norma tal que para todo vector $v \en \mathbb{R}^n$ vale $\norm{Av} \leq \norm{A} \norm{v}$.
+\end{ejer}
+\begin{sol}[Demostración]
+\emph{Primero veamos que está bien definida:}\\
+Todo operador lineal $T \colon \mathbb{R}^n \to \mathbb{R}^n$ es continuo, en particular lo es $v \mapsto Av$; pero el conjunto $S \coloneq \set{x \en \mathbb{R}^n \given \norm{x} = 1}$ es compacto, por lo tanto, existe
+\[
+\max \set*{\norm{Av} \given v \en S} = \sup \set*{ \norm{Av} \given v \en \mathbb{R}^n, \norm{v} = 1 }
+\]
+\emph{Veamos que es una norma}:
+\begin{itemize}
+\item Como $\norm{Av} \geq 0$ para cualquier $v \en S$, entonces $\norm{A} \geq \norm{Av} \geq 0$, además, $\norm{0v} = 0$ para cada $v \en S$ así que $\norm{0} = 0$. Más aún, si $A \neq 0$ entonces existe $v \en \mathbb{R}^n$ con $Av \neq 0$ por lo que $v\neq0$ y $\norm{Av},\norm{v} > 0$. Luego, $\hat{v} \coloneq \frac{v}{\norm{v}} \en S$, de donde
+\[
+\norm{A} \geq \norm{A\hat{v}} = \frac{\norm{Av}}{\norm{v}} > 0
+\]
+Esto prueba que $\norm{\cdot}$ es \emph{definida positiva}.
+\item Sean $A \en \mathcal{M}_n$ y $\lambda \en \mathbb{R}$. Como $\abs{\lambda} \geq 0$, es evidente que
+\[
+\norm{\lambda A} = \sup\set*{\norm{\lambda Av} \given v \en S}%
+= \sup\set*{\abs{\lambda} \cdot \norm{Av} \given v \en S}%
+= \abs{\lambda}\sup\set*{\norm{Av} \given v \en S}%
+= \abs{\lambda}\cdot\norm{A}
+\]
+Esto prueba que $\norm{\cdot}$ es \emph{homogénea}.
+
+\item Sean $A,B \en \mathcal{M}_n$. Entonces para cada $v \en S$ se cumple
+\[
+\norm{(A+B)v} = \norm{Av + Bv} \leq \norm{Av} + \norm{Bv} \leq \norm{A} + \norm{B}
+\]
+Esto muestra que $\norm{A} + \norm{B}$ es cota superior de $\set{\norm{(A+B)v} \given v \en S}$, por lo cual la definición de supremo implica que $\norm{A+B} \leq \norm{A} + \norm{B}$, i.e., $\norm{\cdot}$ satisface la \emph{desigualdad del triángulo}.
+\end{itemize}\vspace{1em}
+\emph{Veamos que $\norm{Av} \leq \norm{A}\cdot\norm{v}$}:\\
+Si $v = 0$, ya terminamos, pues $Av = 0$ y $\norm{Av} = 0 \leq \norm{A}\cdot\norm{v}$. Supongamos que $v \en V - \set0$, entonces se tiene que $\norm{v} > 0$ y $\hat{v} \coloneq \frac{v}{\norm{v}} \en S$ por lo que
+\[
+\frac{\norm{Av}}{\norm{v}} = \norm{A\hat{v}} \leq \norm{A}%
+\quad\implies\quad%
+\norm{Av} \leq \norm{A} \cdot \norm{v}
+\]
+Esto termina la prueba.
+\end{sol}
+
+%------------------------------------- Ejercicio 3 -----------------------------------
+\begin{ejer}
+Probar que
+\[
+\norm{A}_0 = \sup\set*{ \abs*{a_{ij}} \given 1 \leq i, j \leq n }
+\]
+es otra norma en $\mathcal{M}_n$.
+\end{ejer}
+\begin{sol}[Demostración]
+Notemos que como el supremo es tomado sobre un conjunto finito coincide con el máximo. Ahora probemos que $\norm{\cdot}_0$ es una norma sobre $\mathcal{M}_n$:
+\begin{itemize}
+\item Por definición, $\norm{A} \geq 0$ y como las entradas de la matriz $0$ son nulas, $\norm{0} = 0$. Más aún, si $A \neq 0$ entonces existen $i,j \en \set{1,\dots,n}$ tales que $a_{i.j} \neq 0$. Por lo tanto, $\norm{A}_0 \geq \abs{a_{i,j}} > 0$. Esto prueba que $\norm{\cdot}_0$ es \emph{definida positiva}.
+
+\item Si $A \en \mathcal{M}_n$ y $\lambda \en \mathbb{R}$, la entrada $i,j\text{-ésima}$ de $\lambda A$ es $\lambda a_{i,j}$ por lo cual,
+\[
+\norm{\lambda A}_0%
+= \sup_{\mathclap{1 \leq i, j \leq n}} \abs*{ \lambda a_{ij}}%
+= \sup_{\mathclap{1 \leq i, j \leq n}} \abs{\lambda}\abs*{a_{ij}}%
+= \abs{\lambda}\sup_{\mathclap{1 \leq i, j \leq n}} \abs*{a_{ij}}%
+= \abs{\lambda}\cdot\norm{A}_0
+\]
+Esto prueba que $\norm{\cdot}_0$ es \emph{homogénea}.
+
+\item Si $A,B \en \mathcal{M}_n$ entonces la $i,j\text{-ésima}$ entrada de $A+B$ es $a_{i,j} + b_{i,j}$  por lo que
+\[
+\abs{a_{i,j} + b_{i,j}} \leq \abs{a_{i,j}} + \abs{b_{i,j}} \leq \norm{A}_0 + \norm{B}_0,%
+\quad\forall i,j \en \set{1,\dots,n}
+\]
+por lo que $\norm{A}_0 + \norm{B}_0$ es cota superior de $\set*{ \abs*{a_{ij} + b_{i,j}} \given 1 \leq i, j \leq n }$ así que la definición de supremo implica que $\norm{A+B}_0 \leq \norm{A}_0 + \norm{B}_0$. Esto prueba que $\norm{\cdot}_0$ satisface la \emph{desigualdad del triángulo}.
+\end{itemize}
+\end{sol}
+
+%------------------------------------- Ejercicio 4 -----------------------------------
+\begin{ejer}
+Una función $A : \mathbb{R} \to \mathcal{M}_n$ es continua si para todo $t \en \mathbb{R}$ se tiene $\lim_{h\to 0} \norm{A(t+h) - A(t)} = 0$. Probar que $A(t)$ es continua si y solo si cada coeficiente $a_{ij}(t)$ es una función continua de $\mathbb{R}$ en $\mathbb{R}$.
+\end{ejer}
+\begin{sol}[Demostración]
+\emph{Primero probémoslo para la norma $\norm{\cdot}_0$}:\\
+Si $A(t)$ es continua, entonces para cada $i,j \en \set{1,\dots,n}$ y $t \en \mathbb{R}$
+\[
+0 \leq \abs{a_{i,j}(t+h) - a_{i,j}(t)} \leq \norm{A(t+h) - A(t)}_0
+\]
+por lo cual, gracias a que el lado derecho converge a $0$ cuando $h \to 0$, el teorema de compresión implica que $\lim_{h\to0} \abs{a_{i,j}(t+h) - a_{i,j}(t)} = 0$ para cada $t \en \mathbb{R}$, i.e., cada $a_{i,j}(t)$ es continua. Recíprocamente, supongamos que $a_{i,j}(t)$ es continua para cada $i,j \en \set{1,\dots,n}$ y sean $t \en \mathbb{R}$ y $\varepsilon > 0$. Por hipótesis, para cada $i,j \en \set{1,\dots,n}$ existe $\delta_{i,j} >0$ tal que 
+\[
+\forall h \en \mathbb{R}\;%
+\Big(\;%
+    \abs{h} < \delta_{i,j} \implies \abs{a_{i,j}(t+h) - a_{i,j}(t)} < \varepsilon
+\;\Big)
+\]
+tomando $\delta \coloneq \min\set*{\delta_{i,j} \given 1\leq i,j\leq n}$ se cumple que
+\[
+\forall h \en \mathbb{R}\;\Big(\;%
+\abs{h} < \delta \implies  \forall i,j \en \set{1,\dots,n},\; \abs{a_{i,j}(t+h) - a_{i,j}(t)} < \varepsilon
+\;\Big)
+\]
+pero $\abs{a_{i,j}(t+h) - a_{i,j}(t)} < \varepsilon$ para cada $i,j \en \set{1,\dots,n}$ si y solo si $\norm{A(t+h) - A(t)} < \varepsilon$. Así que
+\[
+\forall h \en \mathbb{R}\;%
+\Big(\;%
+    \abs{h} < \delta \implies \norm{A(t+h) - A(t)} < \varepsilon
+\;\Big)
+\]
+Como $\varepsilon > 0$ es arbitrario, esto prueba que $\lim_{h\to 0} \norm{A(t+h) - A(t)} = 0$ para cada $t \en \mathbb{R}$, es decir, $A(t)$ es continua.\par\vspace{1em}
+\emph{Probémoslo para cualquier norma $\norm{\cdot}$}:\\
+Por el \myref{ejer:4.1}, existen $C_1,C_2 > 0$ tales que $\norm{\cdot} \leq C_1 \norm{\cdot}_0$ y $\norm{\cdot}_0 \leq C_2 \norm{\cdot}$. Luego, 
+\[
+0 \leq \norm{A(t+h) - A(t)} \leq C_1\norm{A(t+h) - A(t)}_0%
+\quad\text{y}\quad%
+0 \leq \norm{A(t+h) - A(t)}_0 \leq C_2\norm{A(t+h) - A(t)}
+\]
+Si $A$ es continua respecto a $\norm{\cdot}_0$ entonces en la desigualdad izquierda $C_1\norm{A(t+h) - A(t)}_0 \xrightarrow{h\to0}0$ por lo que también $\norm{A(t+h) - A(t)} \xrightarrow{h\to0}0$ así que $A$ es continua respecto a $\norm{\cdot}$. Recíprocamente, si $A$ es continua respecto a $\norm{\cdot}$, en la desigualdad derecha $C_2\norm{A(t+h) - A(t)} \xrightarrow{h\to0}0$ por lo que también $\norm{A(t+h) - A(t)}_0 \xrightarrow{h\to0}0$ así que $A$ es continua respecto a $\norm{\cdot}_0$. Esto prueba que la continuidad respecto a ambas normas es equivalente, así que la prueba del ejercicio para $\norm{\cdot}_0$ sirve también como prueba del caso general con cualquier norma $\norm{\cdot}$.
+\end{sol}
+
+%------------------------------------- Ejercicio 5 -----------------------------------
+\begin{ejer}
+Sea $A:\mathbb{R} \to \mathcal{M}_n$ derivable, es decir, tal que cada coeficiente $a_{ij}(t)$ es una función derivable. Probar que la función $h(t) = \det(A(t))$ es derivable y que su derivada vale
+\[
+\dot{h}(t) = \sum_{k=1}^{n} \det(c^k_{ij}(t))
+\]
+donde $c^k_{ij}(t) = a_{ij}(t)$ si $i \neq k$ y $c^k_{ij}(t) = \dot{a}_{ij}(t)$ si $i = k$. En otras palabras, la matriz $(c^k_{ij})$ es la que se obtiene derivando la fila $k$ de la matriz $A$.
+\end{ejer}
+\begin{sol}[Demostración]
+El determinante es definido como la única forma $n\text{-lineal}$ alternante (al verla como función de las filas o las columnas de la matriz) cuyo valor es $1$ en la matriz identidad. En este caso, la veremos como función de las filas de la matriz, i.e., si $A = (a_{i,j})^n_{i,j=1}$ entonces
+\[
+\det(a_{1,*}, a_{2,*}, \dots, a_{n,*}) \equiv \det A
+\]
+donde $a_{i,*}$ es la $i\text{-ésimo}$ fila de $A$.\par
+\begin{lema}\label{lema:Binom}
+Si $V \en \mathrm{FinVect}_{\mathbb{R}}$ y $D \colon V^k \to \mathbb{R}$ es una forma $k\text{-lineal}$, entonces para cada $(a_i),(b_i) \en V^k$,
+\[
+D(a_1 +b_1,\dots,a_{k}+b_{k})%
+= \sum_{\mathclap{\substack{c_i \en \set{a_i,b_i}\\1\leq i \leq k}}} D(c_1,\dots,c_{k})
+\]
+\end{lema}
+Este hecho se puede ver como una versión no conmutativa del producto de binomios y su prueba es una aplicación directa de inducción matemática sobre $k$. El caso base es trivial y el paso inductivo es el siguiente: si suponemos que la fórmula dada se cumple para cualquier forma $k\text{-lineal}$ y tomamos una forma $(k+1)\text{-lineal}$ $D \colon V^{k+1} \to \mathbb{R}$, entonces, dados $a_{k+1},b_{k+1} \en V$ tenemos que $D(-,-,\dots,a_{k+1})$ y $D(-,-,\dots,b_{k+1})$ son $k\text{-lineales}$, así que para cada $(a_i)^k_{i=1},(b_i)^k_{i=1} \en V^k$
+\begin{align*}
+D(a_1 +b_1,\dots,a_k+b_k,a_{k+1})%
+&= \sum_{\mathclap{\substack{c_i \en \set{a_i,b_i}\\1\leq i \leq k}}} D(c_1,\dots,c_k,a_{k+1})\\
+\\
+&\;\text{y}\\
+\\
+D(a_1 +b_1,\dots,a_k+b_k,b_{k+1})
+&= \sum_{\mathclap{\substack{c_i \en \set{a_i,b_i}\\1\leq i \leq k}}} D(c_1,\dots,c_k,b_{k+1})
+\end{align*}
+sumando ambas expresiones obtenemos
+\[
+D(a_1 +b_1,\dots,a_{k+1}+b_{k+1})%
+= \sum_{\mathclap{\substack{c_i \en \set{a_i,b_i}\\1\leq i \leq k+1}}} D(c_1,\dots,c_{k+1})
+\]
+Esto completa la inducción.
+\begin{coro}\label{coro:detcomb}
+Si $A =(a_{i,j}), B = (b_{i,j}) \en \mathcal{M}_n$, entonces
+\[
+\det(A + B) = \sum_{C \en M} \det(C),%
+\quad\text{donde}\quad%
+M = \set*{(c_{i,j}) \en \mathcal{M}_n \given c_{i,*}= a_{i,*} \vee c_{i,*} = b_{i,*}}
+\]
+En particular, si $\lambda \en \mathbb{R}$,
+\[
+\det(A + \lambda B) = \det(A) + \lambda\sum_{\mathclap{C \en M_1}}\det(C) +\dots+ \lambda^n\sum_{\mathclap{C \en M_n}}\det(C)
+\]
+donde $M_k$ consta de aquellas matrices en $M$ que tienen $k$ filas provenientes de $B$.
+\end{coro}
+La primera parte del corolario es una aplicación directa del \myref{lema:Binom} con $D = \det$. La segunda se obtiene usando el primer resultado y particionando $M$ según la cantidad de filas provenientes de $B$ en cada matriz $C \en M$. Debido a la $n\text{-linealidad}$ del determinante, cada fila proveniente de $B$ aporta un factor $\lambda$ al correspondiente determinante.\par\vspace{1em}
+\emph{Ahora podemos probar el resultado}:\\
+Fijemos un $t \en \mathbb{R}$ arbitrario. Como existe $\dot{A}(t)$ ---cuyas entradas son los $\dot{a}_{i,j}(t)$---, se sigue que hay una función $r\colon \mathbb{R} \to \mathcal{M}_n$ tal que
+\[
+\lim_{\Delta t \to 0} \frac{r(\Delta t)}{\Delta t} = 0%
+\quad\text{y}\quad%
+\forall\Delta t \en \mathbb{R},\;A(t+\Delta t) - A(t) = \Delta t \cdot \dot{A}(t) + r(\Delta t)
+\]
+por lo cual, si definimos la función $\ell(\Delta t) \coloneq \dot{A}(t) + \Delta t^{-1}\cdot r(\Delta t)$, se tiene que
+\[
+\lim_{\Delta t \to 0} \ell
+(\Delta t) = \dot{A}(t)%
+\quad\text{y}\quad%
+A(t+\Delta t) = A(t) + \Delta t \cdot \ell(\Delta t)
+\]
+Así que, gracias al \myref{coro:detcomb},
+\begin{align*}
+h(t + \Delta t) - h(t)%
+&= \det(A(t + \Delta t))- \det(A(t))%
+= \det(A(t) + \Delta t \cdot \ell(\Delta t)))- \det(A(t))\\
+&= \Delta t \sum_{\mathclap{C \en M_1}} \det(C(\Delta t)) + \dots + \Delta t^n \sum_{\mathclap{C \en M_n}} \det(C(\Delta t))
+\end{align*}
+donde $M_l$ es el conjunto de las funciones $C(\Delta t)$ de $\mathbb{R}$ en $\mathcal{M}_n$ tales que $c_{i,*} \en \set{a_{i,*}(t), \ell_{i,*}}$ (nótese que $c_{i,*}$ es la función de $\mathbb{R}$ en $\mathbb{R}^n$ tal que $c_{i,*}(\Delta t)$ es la $i\text{-ésima}$ fila de $C(\Delta t)$) y $c_{i,*} = \ell_{i,*}$ para exactamente $l$ valores de $i$. Como el determinante es continuo con respecto a sus entradas (ya que es un polinomio con respecto a ellas) tenemos que, si $C \en M_l$ para algún $l \en \set{1,\dots,n}$, entonces 
+\[
+\lim_{\Delta t \to 0} \det(C(\Delta t)) = \det(\lim_{\Delta t \to 0} C(\Delta t))
+\]
+pero $\lim_{\Delta t \to 0} C(\Delta t)$ existe gracias a que existe el límite de cada una de sus entradas, más aún, conserva iguales aquellas filas provenientes de $A$ (ya que son constantes resp. a $\Delta t$) y cambia aquellas provenientes de $\ell(\Delta t)$ por su límite, es decir, por $\dot{a}_{i,*}(t)$. En particular, si $C \en M_1$ entonces $\lim C(\Delta t)$ es igual a algún $(c^k_{i,j})$. Luego
+\begin{align*}
+\dot{h}(t)
+&= \lim_{\Delta t \to 0} \frac{h(t + \Delta t) - h(t)}{\Delta t}%
+= \lim_{\Delta t \to 0} \left(\;%
+    \sum_{\mathclap{C \en M_1}}\!\det(C(\Delta t)) + \dots + \Delta t^{n-1}\!\sum_{\mathclap{C \en M_n}}\!\det(C(\Delta t))
+\;\right)
+% \\
+% &= \sum_{C \en M_1} \det(\lim_{\Delta t \to 0} C(\Delta t)) +0 \cdot \sum_{C \en M_2} \det(\lim_{\Delta t \to 0} C(\Delta t)) + \cdots + 0^{n-1} \cdot \det(\lim_{\Delta t \to 0} C(\Delta t))
+= \sum^n_{k = 1}\!\det(c^k_{i,j})
+\end{align*}
+
+\end{sol}
+
+%------------------------------------- Ejercicio 6 -----------------------------------
+\begin{ejer}[Fórmula de Liouville] 
+Probar que si $\phi:\mathbb{R} \to \mathcal{M}_n$ es la matriz principal en $t=0$ de la ecuación lineal $\dot{x} = A(t)x$ (i.e. $\dot{\phi}(t) = A(t)\phi(t)$ para todo $t \en \mathbb{R}$ y $\phi(0) = I$) entonces para todo $t_0 \en \mathbb{R}$ vale que
+\[
+\det\phi(t) = \det\phi(t_0) \ e^{\int_{t_0}^{t} \mathrm{tr}A(s)\,ds}
+\]
+donde $\mathrm{tr}A$ es la traza (suma de los elementos de la diagonal) de la matriz $A$.
+\end{ejer}
+\begin{sol}[Demostración]
+\begin{nota}
+Como el determinante de una matriz coincide con el de su transpuesta, el \myref{ejer:4.5} se cumple también si consideramos las columnas en lugar de las filas (es decir, si consideramos que $c^k_{i,j}$ se obtiene derivando la $k\text{-ésima}$ columna). De esta forma, también es conveniente cambiar la convención para que el determinante esté en función de las columnas de la matriz.
+\end{nota}
+Un corolario de que $\det \colon (\mathbb{R}^n)^n \to \mathbb{R}$ es la única forma $n\text{-lineal}$ alternante que vale $1$ en la identidad, es que cualquier otra forma $n\text{-lineal}$ alternante $D \colon (\mathbb{R}^n)^n \to \mathbb{R}$ es de la forma $D(A) = D(I_n)\det(A)$. A partir de esto, se prueba el siguiente lema:
+\begin{lema}\label{lema:traza}
+Para cualesquiera $A \en \mathcal{M}_n$ y $(v_1,\dots,v_n) \en (\mathbb{R}^n)^n$, se vale que
+\[
+\sum^n_{k=1} \det(v_1,\dots,Av_k,\dots,v_n) = \tr(A)\det(v_1,\dots,v_n)
+\]
+\end{lema}
+Para probar este resultado, basta verificar que $\sum \det(-,\dots,A-,\dots,-)$ es alternante (claramente es $n\text{-lineal}$ porque cada uno de sus sumandos lo es) y vale $\tr(A)$ en la identidad (i.e., en $(e_1,\dots,e_n)$). Esto es así: supongamos que $v_i = v_j$ con $i < j$. Entonces hay dos casos para $k$
+\begin{enumerate}[label = (\roman*)]
+\item Para $k \noten \set{i,j}$ se tiene $\det(v_1,\dots,Av_k,\dots,v_n) = 0$ ya que el determinante es alternante.
+
+\item Para $k \en \set{i,j}$ los sumandos correspondientes son
+\[
+\det(\dots,Av_i,\dots v_j,\dots)%
+\quad\text{y}\quad
+\det(\dots,v_i,\dots Av_j,\dots)%
+\]
+pero como el determinante es alternante y $v_i = v_j$
+\[
+\det(\dots,v_i,\dots Av_j,\dots) = -\det(\dots,Av_j,\dots v_i,\dots) = -\det(\dots,Av_i,\dots v_j,\dots)
+\]
+por lo que estos dos sumandos se van a cancelar
+\end{enumerate}
+Sumando sobre $k \en \set{1,\dots,n}$ obtenemos que cuando $v_i = v_j$
+\[
+\sum^n_{k=1} \det(v_1,\dots,Av_k,\dots,v_n) = 0
+\]
+Esto prueba que $\sum\det(-,\dots,A-,\dots,-)$ es una forma $n\text{-lineal}$ alternante; además,
+\[
+\sum^n_{k=1} \det(e_1,\dots,Ae_k,\dots,e_n) = \sum^n_{k=1} \det(e_1,\dots,a_{*,k},\dots,e_n) = \sum^n_{k=1}a_{k,k} = \tr(A)
+\]
+Esto demuestra el lema.\clearpage
+\emph{Ahora probemos el ejercicio}:\\
+Por el \myref{ejer:4.5} aplicado a las columnas, la derivada de $h(t) \coloneq \det(\phi(t))$ es
+\[
+\dot{h}(t) = \sum^n_{k=1} \det(\phi_{*,1}(t),\dots,\dot{\phi}_{*,k}(t),\dots\phi_{*,n}(t))
+\]
+donde $\phi_{*,j}(t)$ denota la $j\text{-ésima}$ columna de $\phi(t)$ con $1 \leq j \leq n$. No obstante, sabemos que las columnas de la matriz fundamental son soluciones de la EDO, así que el \myref{lema:traza} implica
+\[
+\dot{h}(t) = \sum^n_{k=1} \det(\phi_{*,1}(t),\dots,A(t)\phi_{*,k}(t),\dots,\phi_{*,n}(t)) = \tr(A(t))\det(\phi_{*,1}(t),\dots,\phi_{*,n}(t)) = \tr(A(t))h(t)
+\]
+De esto se sigue que $h(t)$ es solución de la EDO lineal homogénea $\dot{x} = \tr(A(t))x$. Sin embargo, ya sabemos que la única solución a esta EDO para la condición inicial $(t_0,h(t_0))$ es
+\[
+h(t_0)e^{\int_{t_0}^{t} \mathrm{tr}A(s)\,ds}
+\]
+Por lo tanto, $h(t) = h(t_0)e^{\int_{t_0}^{t} \mathrm{tr}A(s)\,ds}$, es decir,
+\[
+\det\phi(t) = \det\phi(t_0) \ e^{\int_{t_0}^{t} \mathrm{tr}A(s)\,ds}
+\]
+\end{sol}
+
+%------------------------------------- Ejercicio 7 -----------------------------------
+\begin{ejer}
+Halle los puntos de equilibrio del sistema
+\[
+\begin{cases}
+\;\dot{x} = 2y(z-1) \\
+\;\dot{y} = -x(z-1) \\
+\;\dot{z} = -z^3
+\end{cases}
+\]
+Muestre que la linealización alrededor del origen no permite decidir su estabilidad. Para determinar la estabilidad, busque una función de Liapunov de la forma \[V(x,y,z) = ax^2 + by^2 + cz^2\]
+\end{ejer}
+\begin{sol}
+Si $f(x,y,z) = (0,0,0)$ entonces $-z^3 = 0$ por lo cual $z = 0$ así que sustituyendo: $-2y = 2y(z-1) = 0$ y $x = -x(z-1) = 0$, es decir, $(x,y,z) = (0,0,0)$. Se sigue que el único punto de equilibrio es el origen.
+
+La matriz jacobiana del campo $f(x,y,z) = (2y(z-1), -x(z-1), -z^3)$ es
+\[
+J_f(x,y,z) =%
+\mqty(%
+0 & 2(z-1) & 2y\\
+-(z-1) & 0 & -x\\
+0 & 0 & -3z^2
+)
+\]
+Así que evaluada en cero da $J_f(0,0,0) = \smqty(0&-2&0\\1&0&0\\0&0&0)$. Esta matriz tiene kernel no trivial (pues $e_3$ está en su kernel) lo cual implica que tiene a $0$ como valor propio así que no se puede determinar su estabilidad a partir de su linealización en el origen (ya que no todos sus valores propios tienen parte real negativa).
+
+En su defecto, determinemos la estabilidad buscando una función de Liapunov de la forma 
+\[
+V(x,y,z) = ax^2 + by^2 + cz^2
+\]
+Calculamos la derivada sobre una solución hipotética 
+\[
+\dot{V}(x,y,z) = \ang{\nabla V \given f} = \ang{(2ax,2by,2cz) \given (2y(z-1),-x(z-1),-z^3)} = (4a-2b)xy(z-1) - 2cz^4
+\]
+como $xy(z-1)$ no mantiene el mismo signo en ningún entorno del origen, basta con que $4a-2b = 0$. Entonces podemos proponer
+\[
+V(x,y,z) = \frac14x^2 + \frac12y^2 + \frac12z^2
+\]
+Esta función es definida positiva y su derivada $\dot{V}(x,y,z) = -z^4$ es semidefinida negativa. La existencia de esta función de Liapunov implica que el origen es punto de equilibrio estable.
+\end{sol}
+
+%------------------------------------- Ejercicio 8 -----------------------------------
+\begin{ejer}
+Consideramos la ecuación diferencial autónoma $\dot{x} = F(x)$ donde $F$ es un campo de vectores acotado y localmente Lipschitz en $\mathbb{R}^n$, tal que $p \en \mathbb{R}^n$ es un punto de equilibrio asintóticamente estable. Denotamos $\varphi(t,x)$ al flujo en $\mathbb{R}^n$ que define esta ecuación, definimos la \textit{cuenca de atracción} del punto $p$ como el conjunto
+\[
+A_p = \set[\big]{ x \en \mathbb{R}^n \given \lim_{t \to \infty} \varphi(t,x) = p }.
+\]
+\begin{enumerate}[label=(\alph*)]
+\item Probar que $A_p$ es abierto.
+
+\item Probar que tanto $A_p$ como su borde $\partial A_p$ son conjuntos invariantes por el flujo.
+
+\item Probar que todo punto $z \en \partial A_p$ es inestable y concluir que si todos los puntos son estables para la ecuación, entonces todas las órbitas tienden a $p$ en el futuro.
+\end{enumerate}
+\end{ejer}
+\begin{sol}[Demostración]
+Por practicidad, primero probaré el inciso (b):
+\begin{enumerate}
+\item[(b)] \emph{Veamos que $A_p$ es invariante por la acción del flujo}:\\
+Por resultados elementales sobre límites y ya que $\varphi(t+t_0,x) = \varphi(t,\varphi(t_0,x))$, se cumple que para cualquier $t_0 \en \mathbb{R}$
+\[
+\lim_{t\to\infty}\varphi(t,x) = p%
+\quad\iff\quad%
+\lim_{t\to\infty}\varphi(t + t_0,x) = p%
+\quad\iff\quad%
+\lim_{t\to\infty}\varphi(t, \varphi(t_0,x)) = p
+\]
+Es decir, $x \en A_p$ si y solo si $\varphi(t_0,x) \en A_p$. Como $t_0 \en \mathbb{R}$ es arbitrario, esto demuestra que $A_p$ es invariante bajo el flujo.\footnote{Más aún, probamos que también el complemento es invariante bajo el flujo: como es un "si y solo si", en particular $x \noten A_p$ implica que para cada $t_0 \en \mathbb{R}$ se tiene $\varphi(t_0,x) \noten A_p$.}\par
+\emph{Veamos que $\partial A_p$ es invariante por la acción del flujo}:\\
+Sean ahora $x \en \partial A_p$ y $t_0 \en \mathbb{R}$ arbitrarios. Entonces, dado $\varepsilon > 0$ arbitrario, tenemos (nuevamente, por continuidad respecto a condiciones iniciales) que existe $\delta > 0$ tal que
+\[
+\norm{x - y} < \delta%
+\quad\implies\quad%
+\forall t \en I,\; \norm{\varphi(t,x) - \varphi(t,y)} < \varepsilon
+\]
+donde $I = [\min\set{0,t_0},\max\set{0,t_0}]$. Sin embargo, como $x \en \partial A_p$ se sigue que existen $y,z \en B(x,\delta)$ tales que $y \en A_p$ y $z \noten A_p$. Esto implica que $\varphi(t_0,y), \varphi(t_0,z) \en B(\varphi(t_0,x), \varepsilon)$ y (por lo visto en el inciso anterior) $\varphi(t_0,y) \en A_p$ y $\varphi(t_0,z) \noten A_p$. Como $\varepsilon>0$ es arbitrario, concluimos que $\varphi(t_0,x) \en \partial A_p$.
+
+\item[(a)] Sea $x \en A_p$. Como $p$ es asintóticamente estable, existe $\delta_1 > 0$ tal que para cada $y \en \mathbb{R}^n$
+\[
+\norm{y-p} < \delta_1%
+\quad\implies\quad%
+\lim_{t \to \infty} \varphi(t,y) = p%
+\quad\text{(equivalentemente, $y \en A_p$)}
+\]
+es decir, $B(p,\delta_1) \subseteq A_p$. Además, como $x \en A_p$, existe $t_1 \geq 0$ tal que
+\[
+\forall t\geq t_1, \quad\norm{\varphi(t,x) - p} < \frac{\delta_1}{2}
+\]
+Por otro lado, la continuidad respecto a las condiciones iniciales implica que existe $\delta_2 > 0$ tal que
+\[
+\norm{y - x} < \delta_2%
+\quad\implies\quad%
+\forall t\en[0,t_1],\;\norm{\varphi(t,y) - \varphi(t,x)} < \frac{\delta_1}{2}
+\]
+De esto se sigue que para cada $y \en B(x, \delta_2)$ se satisface
+\[
+\norm{\varphi(t_1,y) - p} \leq \norm{\varphi(t_1,y) - \varphi(t_1,x)} + \norm{\varphi(t_1,x) - p} < \frac{\delta_1}{2} + \frac{\delta_1}{2} = \delta_1
+\]
+lo cual implica $\varphi(t_1,y) \en A_p$
+así que, por lo visto en (b), $y \en A_p$. Hemos probado que $B(x,\delta_2) \subseteq A_p$ y, como $x \en A_p$ es arbitrario, se sigue que $A_p$ es abierto.
+
+\item[(c)] Supongamos por contradicción que existe $z \en \partial A_p$ estable. Por un lado, la estabilidad asintótica de $p$ garantiza que existe $\delta_1 >0$ tal que para cada $y \en \mathbb{R}^n$
+\[
+\norm{y-p} < \delta_1%
+\quad\implies\quad%
+\lim_{t\to\infty} \varphi(t,y) = p%
+\quad\text{(equivalentemente, $y \en A_p$)}
+\]
+Por otro lado, la estabilidad de $z$ implica que existe $\delta_2 > 0$ tal que para cada $y \en \mathbb{R}^n$
+\[
+\norm{z-y} < \delta_2%
+\quad\implies\quad%
+\forall t\geq0,\;\norm{\varphi(t,z) - \varphi(t,y)} < \frac{\delta_1}{2}
+\]
+Sin embargo, como $z \en \partial A_p$ se sigue que existe $y_0 \en B(z,\delta_2) \cap A_p$; en particular, como $y_0 \en A_p$ se tiene que $\lim_{t\to\infty}\varphi(t,y_0) = p$ así que existe $t_0\geq0$ tal que
+\[
+\forall t \geq t_0,\;\norm{\varphi(t,y_0) - p} < \frac{\delta_1}{2}
+\]
+Finalmente, como también tenemos $\norm{z-y_0} < \delta_2$ entonces se cumple
+\[
+\norm{\varphi(t_0,z) - p} \leq \norm{\varphi(t_0,z) - \varphi(t_0,y_0)} + \norm{\varphi(t_0,y_0) - p} < \frac{\delta_1}{2} + \frac{\delta_1}{2} = \delta_1
+\]
+esto implica que $\varphi(t_0,z) \en A_p$ así que (por inciso (b)) $z \en A_p$. No obstante, esto implica que $z \en \partial A_p \cap A_p$, lo cual es una contradicción, pues ya vimos que $A_p$ es abierto por lo que $\partial A_p \cap A_p = \varnothing$. El error estuvo en suponer que $z \en \partial A_p$ es estable, por lo que todos los puntos en la frontera son inestables.\par
+En particular, si todos los puntos son estables se sigue que $\partial A_p = \varnothing$, de donde se sigue que $A_p$ es un abierto sin frontera de $\mathbb{R}^n$, como $\mathbb{R}^n$ es conexo, esto implica que $A_p = \mathbb{R}^n$. Es decir, todas las órbitas convergen a $p$ en el futuro.
+\end{enumerate}
+\end{sol}

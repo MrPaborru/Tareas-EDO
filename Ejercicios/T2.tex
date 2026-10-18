@@ -1,0 +1,477 @@
+%------------- Ejercicio 1 ------------
+\begin{ejer}
+Sea $\Omega \subseteq \mathbb{R} \times \mathbb{R}^n$ un abierto y 
+$f \colon \Omega \to \mathbb{R}^n$ una función para la cual existe en todo punto 
+la derivada parcial $\diffp fx (t, x)$, y esta función es 
+continua en $\Omega$. Demostrar que la función $f$ satisface la condición 
+de Lipschitz local respecto a la variable $x$.
+\end{ejer}
+\begin{sol}
+Denotaremos $\difcp fx \coloneq \diffp fx$ a la parcial de $f$ respecto a $x$ y $f_i \colon \Omega \to \mathbb{R}$ a las componentes de $f$; además, trabajaremos en $\mathbb{R}^n$ con la norma uniforme, $\norm{\cdot}_{\infty}$; y en los espacios de transformaciones lineales, $\mathcal{L}(\mathbb{R}^n,\mathbb{R})$ y $\mathcal{L}(\mathbb{R}^n)$,\footnote{Recordemos que $\difcp fx(t_0,x_0)$ es definida como una transformación lineal, más específicamente, como la derivada de $x \mapsto f(t_0,x)$ en $x_0$.} con la norma del operador, $\norm{\cdot}_\text{op}$. Sea $(t_0,x_0) \en \Omega$ arbitrario. Como $\Omega$ es abierto, existen $\delta,\varepsilon>0$ tales que $[t_0-\delta, t_0+\delta] \times \ubar{B}_\varepsilon(x_0) \subseteq \Omega$. Además, como $\difcp fx$ es continua y la cerradura de $U \coloneq (t_0-\delta, t_0+\delta) \times B_\varepsilon(x_0)$ es compacta, existe 
+\[
+K \coloneq%
+\max_{(t,x) \en \ubar{U}}\;%
+\norm{\difcp fx (t,x)}_\text{op}
+\]
+Ahora sean $t \en (t-\delta,t+\delta)$ y $x,y \en B_\varepsilon(x_0)$ arbitrarios. Por teorema del valor medio (aplicado a cada componente de $f$) existe, para cada $i \en \Brack{1,n}$, un $\xi_i \en [x,y]$ (por convexidad, $\xi_i \en B_\varepsilon(x_0)$) con
+\[
+f_i(t,x) - f_i(t,y) = \difcp{f_i}x(t,\xi_i) (x - y)
+\]
+luego, por definición de la norma del operador,
+\[
+\abs*{f_i(t,x) - f_i(t,y)} \leq \norm{\difcp{f_i}x(t,\xi_i)}_\text{op} \norm{x - y}_{\infty}
+\]
+como $\difcp{f_i}x(t,\xi_i)$ es la $i\text{-ésima}$ componente de $\difcp{f}x(t,\xi_i)$,\footnote{Para ser precisos, en cualquier curso de cálculo diferencial se ve que $\difcp {f_i}x(t,x)$ coincide con la composición $\pi_i \circ \difcp fx(t,x)$ donde $\pi_i \colon \mathbb{R}^n \to \mathbb{R}$ es la proyección sobre la $i\text{-ésima}$ componente; en otras palabras, la derivada de la $i\text{-ésima}$ componente es la $i\text{-ésima}$ componente de la derivada.} para cada $v \en \mathbb{R}^n$ de norma $1$, se tiene que $\abs*{\difcp{f_i}x(t,\xi_i)v} \leq \norm*{\difcp{f}x(t,\xi_i)v}_\infty$, por tanto, gracias a que $(t,\xi_i) \en (t_0-\delta, t_0+\delta) \times B_\varepsilon(x_0) \subseteq \ubar{U}$,
+\[
+\norm{\difcp{f_i}x(t,\xi_i)}_\text{op}%
+\leq \norm{\difcp{f}x(t,\xi_i)}_\text{op}%
+\leq K,%
+\quad\forall i \en \Brack{1,n}
+\]
+En consecuencia, $\abs{f_i(t,x) - f_i(t,y)} \leq K \norm{x - y}_{\infty}$ para cada $i \en \Brack{1,n}$, así que se cumple
+\[
+\norm{f(t,x) - f(t,y)}_{\infty} \leq K \norm{x - y}_{\infty}
+\]
+Esto, para cualesquiera $t \en (t_0-\delta,t_0+\delta)$ y $x,y \en B_\varepsilon(x_0)$. Concluimos que $K$ es constante de Lipschitz para $f$ respecto a la variable $x$ sobre $B_\varepsilon(x_0)$ ---uniforme en $(t_0-\delta,t_0+\delta)$--- y $f$ satisface la condición de Lipschitz local respecto a la variable $x$.
+\end{sol}
+
+%------------- Ejercicio 2 ------------
+\begin{ejer}[Ecuaciones diferenciales autónomas]
+Sea $U \subseteq \mathbb{R}^n$ un abierto, y sea 
+$f \colon U \to \mathbb{R}^n$ una función continua y localmente Lipschitz. 
+Para $x_0 \en U$ y $t_0 \en \mathbb{R}$, designamos $\varphi(t, t_0, x_0)$ al valor que 
+toma en el instante $t \en I_{t_0,x_0}$ la solución maximal al problema de Cauchy
+\[
+\dot{x} = f(x), \quad x(t_0) = x_0.
+\]
+
+\begin{enumerate}[label = (\alph*)]
+\item Dados $t_0 \en \mathbb{R}$ y $x \en U$ probar que para todo 
+$t_1 \en \mathbb{R}$ se cumple que si $t \en I_{t_1,x}$ entonces
+\[
+t_0 + (t - t_1) \en I_{t_0,x} \quad \text{y} \quad 
+\varphi(t, t_1, x) = \varphi(t_0 + (t - t_1), t_0, x).
+\]
+
+En otras palabras, se tiene que para todo $s \en \mathbb{R}$ son equivalentes
+\(
+t_0 + s \en I_{t_0,x}\) y \(t_1 + s \en I_{t_1,x},
+\)
+y además vale
+\[
+\varphi(t_0 + s, t_0, x) = \varphi(t_1 + s, t_1, x),
+\]
+lo cual nos lleva a definir la función
+\[
+\phi(t, x) = \varphi(t, 0, x),
+\]
+a la cual llamamos flujo local de la ecuación diferencial, y que basta
+para describir todas las soluciones, ya que si $t \en I_{t_0,x_0}$ entonces se
+tiene que $\varphi(t, t_0, x_0) = \phi(t - t_0, x_0)$.
+
+\item Probar que dado $x \en U$, si se tiene \(s, t+s \en I_{0,x}\) entonces $\phi(t+s, x) = \phi(t, \phi(s, x))$.
+
+\item Supondremos ahora que todas las soluciones maximales están definidas
+para todo $t \en \mathbb{R}$. Para cada $t \en \mathbb{R}$ se define la función
+\[
+\phi^t \colon U \to U \quad\text{definida por}\quad x \mapsto \phi^t(x) = \phi(t, x).
+\]
+Probar que
+\begin{enumerate}[label = (\roman*)]
+\item para cada $t \en \mathbb{R}$ la función $\phi^t$ es continua,
+\item para todo $t, s \en \mathbb{R}$ se tiene que $\phi^{t+s} = \phi^t \circ \phi^s$, y que
+\item $\phi^0 = \id_U$ (la identidad en $U$).
+\end{enumerate}
+
+Concluir que cada función $\phi^t$ es un homeomorfismo, determinando
+su inversa, y concluir que la aplicación
+\[
+(\mathbb{R},+) \to (\mathrm{Homeo}(U), \circ), \quad
+t \mapsto \phi^t
+\]
+del grupo aditivo de números reales en el grupo de los homeos del
+espacio $U$ es un morfismo de grupos. Decimos equivalentemente
+en esta situación que la ecuación diferencial define una acción
+continua de $\mathbb{R}$ en $U$, un sistema dinámico continuo en $U$, 
+o que la familia de homeomorfismos $(\phi^t)_{t \en \mathbb{R}}$ es un flujo en $U$.
+\end{enumerate}
+\end{ejer}\clearpage
+\begin{sol}
+Notemos que $f$ se puede interpretar como una función $F \colon \mathbb{R} \times U \to \mathbb{R}^n$ constante en $t \en \mathbb{R}$ y localmente Lipschitz en $x \en U$. Por lo que podemos usar el teorema de existencia y unicidad de soluciones y, en particular, la existencia y unicidad de soluciones maximales que pasan por un punto dado. 
+\begin{enumerate}[label = (\alph*)]
+\item La función $\psi(t) = \varphi(t_0 + (t - t_1),t_0,x)$ está definida sobre $I_{t_0,x}+(t_1-t_0)$ y, gracias a la regla de la cadena, 
+\[
+\dot\psi(t) = \dot\varphi(t_0 + (t - t_1),t_0,x) = f\big(\varphi(t_0 + (t - t_1),t_0,x)\big) = f(\psi(t))
+\]
+además, $\psi(t_1) = \varphi(t_0,t_0,x) = x$, por lo que $\psi$ es solución de la EDO autónoma que pasa por $(t_1,x)$, de donde se sigue que $\varphi(t,t_1,x)$ es extensión de $\psi(t)$ y $I_{t_0,x} + (t_1 - t_0) \subseteq I_{t_1,x}$. De forma análoga se prueba que la función $\vartheta(t) = \varphi(t_1+(t-t_0),t_1,x)$ definida sobre $I_{t_1,x} + (t_0-t_1)$ es solución de la EDO autónoma que pasa por $(t_0,x)$, por lo que $I_{t_1,x} + (t_0 - t_1) \subseteq I_{t_0,x}$. De esto se sigue que $I_{t_1,x} \subseteq I_{t_0,x} + (t_1 - t_0)$, por lo que ambas contenciones obtenidas implican 
+\[
+I_{t_1,x} = I_{t_0,x} + (t_1 - t_0)%
+\quad\text{o, equivalentemente,}\quad%
+I_{t_0,x} = I_{t_1,x} + (t_0 - t_1) 
+\]
+Por lo tanto, $\psi(t)$ es la solución maximal que pasa por $(t_1,x)$, i.e., $\psi(t) = \varphi(t,t_1,x)$.
+En particular, si $t \en I_{t_1,x}$ entonces $t_0 + (t - t_1) = t + (t_0 - t_1) \en I_{t_0,x}$ y  
+\[
+\varphi(t,t_1,x) = \psi(t) = \varphi(t_0+(t-t_1),t_0,x)
+\]
+También tenemos, para cada $s \en \mathbb{R}$, que $t_0 + s \en I_{t_0,x}$ si y solo si $t_0+s+(t_1-t_0) \en I_{t_0,x} + (t_1 - t_0)$, es decir,
+\[
+t_0+s \en I_{t_0,x} \iff t_1 + s \en I_{t_0,x} + (t_1-t_0)= I_{t_1,x}
+\]
+y además se cumple
+\[
+\varphi(t_1+s,t_1,x) = \varphi(t_0 + ((t_1 + s) - t_1),t_0,x) = \varphi(t_0 + s,t_0,x)
+\]
+Gracias a esto, a partir de $\phi(t,x) \coloneq \varphi(t,0,x)$ podemos obtener cualquier solución que pase por un punto $(t_0,x_0) \en \mathbb{R} \times U$ arbitrario mediante
+\[
+\varphi(t,t_0,x_0) = \varphi(t - t_0,0,x_0) = \phi(t-t_0,x_0),%
+\quad\forall t \en I_{t_0,x_0}
+\]
+
+\item La función $\psi(t) = \phi(t+s,x)$ definida en $I_{0,x}-s$ cumple, por regla de la cadena, que
+\[
+\dot\psi(t) = \dot\phi(t+s,x) = f(\phi(t+s,x)) = f(\psi(t))
+\]
+además, si $s \en I_{0,x}$ entonces $0 \en {I_{0,x} - s}$ y $\psi(0) = \phi(s,x)$, por lo que $\psi$ es solución de la EDO autónoma que pasa por $(0,\phi(s,x))$. Luego, $\phi(t,\phi(s,x))$ es extensión de $\psi(t)$, por lo cual $I_{0,x}-s \subseteq I_{0,\phi(s,x)}$ y se tiene
+\[
+\phi(t+s,x) = \psi(t) = \phi(t, \phi(s,x)),%
+\quad\forall t \en I_{0,x}-s
+\]
+Es decir, si se cumple $s,t + s \en I_{0,x}$, entonces $t \en I_{0,\phi(s,x)}$ y $\phi(t+s,x) = \phi(t,\phi(s,x))$.
+\clearpage
+\item \emph{Probemos cada inciso:}
+    \begin{enumerate}[label = \roman*.]
+    \item La continuidad respecto a las condiciones iniciales implica que $\varphi(t,t_0,x_0)$ es continua en sus tres variables. Luego, $\phi(t,x) = \varphi(t,0,x)$ es continua respecto a $x$, para cada $t \en \mathbb{R}$.
+
+    \item Gracias a lo visto en el inciso $(b)$ (y a que todas las soluciones están definidas en $\mathbb{R}$) tenemos que, para cada $t,s \en \mathbb{R}$,
+    \[
+    \phi^{t+s}(x) = \phi(t+s,x) = \phi(t,\phi(s,x)) = \phi^t(\phi^s(x)),%
+    \quad\forall x \en U
+    \]
+    Por lo tanto, $\phi^{t+s} = \phi^t \circ \phi^s$.
+
+    \item Por definición, $\phi^0(x) = \phi(0,x) = \varphi(0,0,x) = x$ para cada $x \en U$. Por tanto, $\phi^0 = \id_U$.
+    \end{enumerate}
+Notemos que $\phi^t$ es un homeomorfismo para cada $t \en \mathbb{R}$; en efecto, por lo recién visto,
+\[
+\phi^t \circ \phi^{-t} = 
+\phi^0 = \id_U%
+\quad\text{y}\quad
+\phi^{-t} \circ \phi^t = \phi^0 = \id_U
+\]
+así que $\phi^t$ es continua con inversa $\phi^{-t}$ continua. Esto nos permite definir la aplicación
+\[
+(\mathbb{R}, +) \to (\mathrm{Homeo}(U), \circ),%
+\quad%
+t \mapsto \phi^t
+\]
+que es un morfismo de grupos gracias a los incisos $(ii)$ y $(iii)$.
+\end{enumerate}
+\end{sol}
+
+%------------- Ejercicio 3 ------------
+\begin{ejer}
+Demostrar que si $(\phi^t)_{t \en \mathbb{R}}$ es un flujo en $U$, tal que para cada 
+$x \en U$ existe la derivada en $t = 0$ de la curva $x(t) = \phi^t(x)$, entonces el flujo
+está definido por una ecuación diferencial. Probar que existen flujos que 
+no provienen de una ecuación diferencial.
+\end{ejer}
+\begin{sol}
+Sea $(\phi^t)_{t \en \mathbb{R}}$ un flujo en un abierto $U \subseteq \mathbb{R}^n$, es decir, tal que $t \mapsto \phi^t$ es una acción continua de $\mathbb{R}$ en $U$. Para economizar la notación, para cada $x \en U$ denotaré como $\phi_x \colon \mathbb{R} \to U$ a la función tal que $\phi_x(t) = \phi^t(x)$. De este modo, la hipótesis dice que existe $\dot\phi_{x}(0)$ para cada $x \en U$. Ahora bien, para cualesquiera $t,s \en \mathbb{R}$ y $x \en U$ tenemos 
+\[
+\phi_x(t+s) = \phi^{t+s}(x)= \phi^t(\phi^s(x))= \phi_{\phi_x(s)}(t)
+\]
+Pero este último tiene derivada en $t=0$, por lo que la regla de la cadena implica que $\phi_x$ tiene derivada en $s$ y
+\[
+\dot\phi_x(s) = \dot\phi_{\phi_x(s)}(0)
+\]
+por lo que las $\phi_x$ son derivables en todo $\mathbb{R}$. Esto nos motiva a definir $f \colon U \to \mathbb{R}^n$ tal que $f(x) = \dot\phi_x(0)$, ya que acabamos de ver que para cada $x \en U$ y para cada $s \en \mathbb{R}$ se tiene
+\[
+\dot{\phi}_x(s) = \dot\phi_{\phi_x(s)}(0) = f(\phi_x(s))
+\]
+Por lo tanto, $\phi_x$ es solución de $\dot{y} = f(y)$ para cada $x \en \mathbb{R}$. Más aún, para toda condición inicial $(t_0,x_0) \en \mathbb{R} \times \mathbb{R}^n$, tenemos que $\phi_{\phi_{x_0}(-t_0)}(t)$ es una solución de $\dot{y} = f(y)$ satisface dicha condición inicial:
+\[
+\phi_{\phi_{x_0}(-t_0)}(t_0) = \phi^{t_0}(\phi^{-t_0}(x_0)) = \phi^0(x_0) = x_0
+\]
+\par\vspace{1em}
+\emph{Veamos que existen flujos que no provienen de una ecuación diferencial:}\\
+Sea $\vartheta \colon \mathbb{R} \to \mathbb{R}$ una función que es continua pero no es derivable en ningún punto, por ejemplo, la de Weierstrass:
+\[
+\vartheta(x) = \sum^\infty_{n=0} a^n \cos(b^n\pi x),
+\quad\text{donde}\quad
+a \en (0,1),\;\; b\en 2\mathbb{N}+1 \;\;\text{y}\;\; ab > 1 + \tfrac{3}{2}\pi
+\]
+A partir de esto, definimos $h \colon \mathbb{R}^2 \to \mathbb{R}^2$ tal que 
+\[
+h(x,y) = (x, y + \vartheta(x))
+\]
+Es sencillo verificar que $h$ es continua: su primer componente es la proyección $(x,y) \mapsto x$ y su segunda componente es composición de funciones continuas,
+\[
+(x,y) \xmapsto{\vartheta \times \id_{\mathbb{R}}} (\vartheta(x), y) \xmapsto{\;\;+\;\;} y + \vartheta(x)
+\]
+como ambas componentes de $h$ son continuas, se sigue que $h$ también lo es.
+Además, admite una función inversa
+\[
+h^{-1}(x,y) = (x, y-\vartheta(x))
+\]
+que es continua por un argumento análogo al de la continuidad de $h$. Por tanto, tenemos que $h$ es un homeomorfismo. Ahora construiremos un flujo en $\mathbb{R}^2$ a partir de conjugar con $h$ un flujo sencillo: veamos que $\Psi \colon \mathbb{R} \to \mathrm{Homeo}(\mathbb{R}^2)$ definido por $t \mapsto \Psi^t$ donde 
+\(
+\Psi^t(x,y) = (x+t,y) 
+\)
+es un morfismo de grupos. En efecto, es inmediato que cada $\Psi^t$ es continua; además, para cualesquiera $s,t \en \mathbb{R}$ y $(x,y) \en \mathbb{R}^2$ se cumple que 
+\[
+\Psi^{t+s}(x,y) = (x+(t+s), y) = ((x+s)+t, y) = \Psi^t(x+s,y) = \Psi^t(\Psi^s(x,y))  
+\]
+por lo que $\Psi^{t+s} = \Psi^t \circ \Psi^s$, en particular, esto prueba que $\Psi^t$ tiene de inversa a $\Psi^{-t}$ así que el codominio de $\Psi$ está bien definido y acabamos de ver que $\Psi$ es morfismo de grupos. Ahora, basta con conjugar a $\Psi$ con $h \en \mathrm{Homeo}(\mathbb{R}^2)$, i.e., definimos $\phi \colon \mathbb{R} \to \mathrm{Homeo}(\mathbb{R}^2)$ tal que $t \mapsto \phi^t$ donde $\phi^t = h^{-1} \circ \Psi^t \circ h$. El hecho de que $\phi$ es morfismo de grupos (y por tanto define un flujo) se sigue inmediatamente de que tanto $\Psi$ como la conjugación por $h$ son morfismos de grupos,\footnote{En efecto, si $\vartheta,\psi \en \mathrm{Homeo}(\mathbb{R}^2)$, entonces $h^{-1} \circ( \psi \circ \vartheta) \circ h = (h^{-1} \circ \psi \circ h) \circ (h^{-1} \circ \vartheta \circ h)$. Por lo tanto, $h^{-1} \circ (-) \circ h \colon \mathrm{Homeo}(\mathbb{R}^2) \to \mathrm{Homeo}(\mathbb{R}^2)$ es morfismo de grupos.} es decir, $\phi$ es la composición
+\[
+\mathbb{R} \xrightarrow{\Psi} \mathrm{Homeo}(\mathbb{R}^2) \xrightarrow{h^{-1} \circ\, {(-)} \,\circ\, h} \mathrm{Homeo}(\mathbb{R}^2)
+\]
+Por lo tanto, $\phi$ es una acción de $\mathbb{R}$ sobre $\mathbb{R}^2$, es decir, $(\phi^t)_{t \en \mathbb{R}}$ es un flujo en $\mathbb{R}^2$. Ahora bien, sustituyendo obtenemos que para cada $t,x,y \en \mathbb{R}^2$ se tiene
+\begin{align*}
+\phi^t(x,y)%
+&= h^{-1}\Psi^th(x,y)\\
+&= h^{-1}\Psi^t(x, y + \vartheta(x))\\
+&= h^{-1}(x + t, y + \vartheta(x))\\
+&= (x + t, y + \vartheta(x) - \vartheta(x + t))
+\end{align*}
+Es obvio que $\phi^t$ no proviene de ninguna ecuación diferencial, ya que para cada $x,y \en \mathbb{R}$ tenemos que $t \mapsto \phi^t(x,y)$ no es derivable en ningún punto: en efecto, pues si existiera su derivada en algún $t_0 \en \mathbb{R}$, su segunda componente, $y + \vartheta(x) - \vartheta(x+t)$, tendría derivada respecto a $t$ en $t_0$; sin embargo, gracias a la regla de la cadena, esto implicaría que $\vartheta$ tiene derivada en $x+t$, lo cual es absurdo ya que $\vartheta$ no es derivable en ningún punto. Se sigue que $t \mapsto \phi^t(x,y)$ no puede ser derivable en ningún punto por lo que no es solución de ninguna EDO.
+\end{sol}
+
+%------------- Ejercicio 4 ------------
+\begin{ejer}
+Hallar el flujo que define en $\mathbb{R}^2$ la ecuación lineal $\ddot{x} + ax = 0$, 
+discutiendo según $a \en \mathbb{R}$. 
+\end{ejer}
+\begin{sol}
+Como vimos en clase, para encontrar las soluciones de esta EDO basta con considerar $y = \dot{x}$, por lo que $\dot{y} = \ddot{x} = -ax$ y las soluciones se obtienen resolviendo el siguiente sistema de ecuaciones diferenciales 
+\[
+\left\{\;%
+\begin{matrix}
+   \dot{x} &=& y \\
+   \dot{y} &=& -ax
+\end{matrix}
+\right.%
+\quad\iff\quad
+\mqty(\dot{x}\\\dot{y})%
+=
+\mqty(
+    0 & 1\\
+   -a & 0
+)
+\mqty(x \\ y)
+\]
+que sustituyendo $z = (x, y)$ se convierte en la EDO $\dot{z} = Az$ definida en $\mathbb{R}^2$, donde $A = \left(\begin{smallmatrix}0&1\\-a&0\end{smallmatrix}\right)$. Ya sabemos que la matriz fundamental principal de esta EDO lineal es $e^{At}$, por lo cual, las soluciones maximales de esta EDO lineal son de la forma $e^{(t-t_0)A}z_0$ definidas en todo $\mathbb{R}$. Por lo tanto, el flujo asociado a esta EDO es $\phi^t(z) = e^{tA}z$. Veamos cómo se ve este flujo discutiendo según $a \en \mathbb{R}$.
+
+\begin{itemize}
+%------------------------- a = 0 -------------------------
+    \item Si $a=0$, entonces $A^2 = 0$ así que $A^n = 0$ para todo $n > 1$. Por lo tanto, 
+    \[
+    e^{tA}%
+    = \sum^\infty_{n=0} \frac{t^n}{n!}A^n%
+    = I + tA%
+    = \mqty(1 & t \\ 0 & 1)
+    \]
+    de donde se sigue que $\phi^t(x,y)=
+    % \left(\begin{matrix} 1 & t \\ 0 & 1\end{matrix}\right)\left(\begin{matrix}x\\y\end{matrix}\right) =
+    (x+ty, y)$. Luego, el flujo consta de puntos fijos sobre la recta $y=0$ y de rectas horizontales para puntos con $y \neq 0$.\par
+    %--------------- Espacio fase ------------------
+    \begin{center}
+    \begin{tikzpicture}[scale=1.2,>=latex]
+    % Ejes
+    \draw[-{Stealth}] (-3.3,0)--(3.3,0) node[right]{$x$};
+    \draw[-{Stealth}] (0,-2.3)--(0,2.3) node[above]{$y$};
+    
+    % Línea de puntos fijos
+    \foreach \x in {-3,-2.75,...,2.75,3}{
+        \fill[blue] (\x,0) circle (1.2pt);
+    }
+    
+    % Varias trayectorias horizontales
+    \foreach \v in {-2,-1.5,-1,-0.5,0.5,1,1.5,2}{%
+    \draw[%
+        postaction={decorate},
+        decoration={markings,
+        mark=at position 0.5 with {\arrow{>}}}, blue, thick%
+        ]
+        plot[domain=-3:3]({\x},{\v});
+    }
+    \end{tikzpicture}
+    \end{center}
+\end{itemize}
+
+%------------------------- a \neq 0 -----------------------------
+
+Para los casos $a>0$ y $a<0$, haremos su análisis por separado más adelante, pero antes, hagamos un desarrollo que tienen en común ambos casos, considerando $a \neq 0$.
+El polinomio característico de $A$ es $\det(\lambda I - A) = \lambda^2 + a$; pero el teorema de Cayley-Hamilton implica que $A$ anula su polinomio característico, por lo cual $A^2 + aI = 0$ y $A^2 = -a I$.\footnote{También se puede comprobar este hecho calculando manualmente.} De esto se sigue que $A^{2n} = (A^2)^n = (-a)^nI$ y $A^{2n+1} = (-a)^nA$ para todo $n \en \mathbb{N}_0$. Ahora bien, como la serie de potencias de la exponencial converge absolutamente, podemos separarla en sus potencias pares e impares, es decir:
+\[
+e^{tA} =%
+\sum^\infty_{n=0} \frac{t^n}{n!}A^n =% 
+\sum^\infty_{n=0} \frac{t^{2n}}{(2n)!}A^{2n} + \sum^\infty_{n=0} \frac{t^{2n+1}}{(2n+1)!}A^{2n+1} 
+\]
+Sustituyendo $A^{2n} = (-a)^nI$ y $A^{2n+1} = (-a)^nA$, obtenemos:
+\begin{equation}\label{eq:exp}
+e^{tA} =%
+\sum^\infty_{n=0} \frac{t^{2n}(-a)^n}{(2n)!}\, I + \sum^\infty_{n=0} \frac{t^{2n+1}(-a)^n}{(2n+1)!}\, A%
+\end{equation}
+
+\emph{Ahora usemos este desarrollo para los casos $a < 0$ y $a > 0:$}
+\begin{itemize}
+
+%----------------------------- a < 0 ------------------------------------
+
+    \item Si $a < 0$ entonces se cumple $-a >0$, por lo cual, considerando $\omega \coloneq \sqrt{-a} >0$, se tiene $\omega^{2n} = (\sqrt{-a}^2)^n = (-a)^n$ y $\omega^{2n+1} = \omega(-a)^n$, para todo $n \en \mathbb{N}_0$. Sustituyendo en la \cref{eq:exp}:
+    \begin{align*}
+    e^{tA}%
+    &= \sum^\infty_{n=0} \frac{t^{2n}\omega^{2n}}{(2n)!}\, I + \frac{1}{\omega}\sum^\infty_{n=0} \frac{t^{2n+1}\omega^{2n+1}}{(2n+1)!}\, A\\
+    &= \sum^\infty_{n=0} \frac{(t\omega)^{2n}}{(2n)!}\, I + \frac{1}{\omega}\sum^\infty_{n=0} \frac{(t\omega)^{2n+1}}{(2n+1)!}\, A\\
+    &= \cosh(t\omega)I + \frac{1}{\omega}\sinh(t\omega)A
+    \end{align*}
+    Esto último es por definición de las funciones hiperbólicas. Luego,
+    \[
+    e^{tA} = \mqty( \cosh(t\omega) & 0 \\ 0 & \cosh(t\omega)) + \mqty(0 & \frac{1}{\omega} \sinh(t\omega) \\ \frac{\omega^2}{\omega} 
+    \sinh(t\omega) & 0) = \mqty( \cosh(t\omega) & \frac{1}{\omega} \sinh(t\omega) \\ \omega 
+    \sinh(t\omega) & \cosh(t\omega))
+    \]
+    De esto se sigue que el flujo es
+    \[
+    \phi^t(x,y) = \left(%
+        \cosh(t\omega) x + \tfrac{1}{\omega}\sinh(t\omega) y\;,\;%
+        \omega\sinh(t\omega) x + \cosh(t\omega) y
+    \right)
+    \]
+    Por los puntos con $x=0$  y $y \neq 0$ pasa la solución $\phi^t(0,y) = \big(\frac{y}{\omega}\sinh(t\omega),y\cosh(t\omega)\big)$ cuya imagen son los puntos $(x_1,y_1)$ ---con $y_1$ del mismo signo que $y$--- tales que
+    \[
+    \frac{y_1^2}{y^2} - \frac{x_1^2}{({y}/{\omega})^2} = 1
+    \]
+    Es decir, pertenecen a una hipérbola con asíntotas en las rectas que pasan por el origen de pendiente $\pm \omega$, y cuyos focos son los puntos $(0, \pm c)$ donde $c = \sqrt{y^2 + (y/\omega)^2}$. Análogamente, por los puntos con $y=0$ y $x \neq 0$ pasa la solución $\phi^t(x,0) = \big(x\cosh(t\omega), x\omega\sinh(t\omega)\big)$ cuya imagen son los puntos $(x_2,y_2)$ ---con $x_2$ del mismo signo que $x$--- tales que 
+    \[
+    \frac{x_2^2}{x^2} - \frac{y_2^2}{(x\omega)^2} = 1
+    \]
+    Es decir, pertenecen a una hipérbola con asíntotas en las rectas que pasan por el origen de pendiente $\pm\omega$, y cuyos focos son los puntos $(\pm c,0)$ donde $c = \sqrt{x^2 + (x\omega)^2}$. Por otro lado, también se tiene que por los puntos de la forma $(x,\pm x\omega)$ con $x \neq 0$ pasa la solución
+    \begin{align*}
+    \phi^t(x, \pm x\omega)%
+    &= (\cosh(t\omega)x \pm \sinh(t\omega)x\,,\, \omega\sinh(t\omega)x \pm \omega\cosh(t\omega)x)\\
+    &= (\cosh(t\omega) \pm \sinh(t\omega))x \cdot (1\,,\,\pm\omega)
+    \end{align*}
+    cuya imagen es un rayo abierto que parte del origen y se extiende al infinito pasando por $(x, \pm x\omega)$. Estos casos mencionados (junto al punto de equilibrio en el origen) abarcan todas las posibles soluciones maximales.\footnote{Ya que todo punto de $\mathbb{R}^2$ está en la imagen de alguna de estas soluciones; de esto se sigue, gracias a la unicidad, que la solución que pasa por dicho punto coincide con alguna de las ya vistas.} Para visualizar las soluciones, presento la siguiente figura para el caso $\omega = 1$ (es decir, $a = -1$):
+    
+    %-------------- Espacio fase ------------------
+    \begin{center}
+    \begin{tikzpicture}[scale=1.3,>=latex]
+    % Definir un estilo para la flecha a la mitad
+    \tikzset{
+        mid arrow/.style={
+            decoration={
+                markings,
+                mark=at position 0.5 with {\arrow{>}} 
+            },
+            postaction={decorate} 
+        }
+    }
+    
+    % Ejes
+    \draw[-{Stealth}] (-2.5,0)--(2.5,0) node[right]{$x$};
+    \draw[-{Stealth}] (0,-2.5)--(0,2.5) node[above]{$y$};
+
+    % Punto de equilibrio y soluciones triviales (vectores propios)
+    \draw[mid arrow, red, thick] (0,0) -- (2,2);
+    \draw[mid arrow, red, thick] (0,0) -- (-2,-2);
+    \draw[mid arrow, red, thick] (0,0) -- (2,-2);
+    \draw[mid arrow, red, thick] (0,0) -- (-2,2);
+    \fill[white] (0,0) circle (2pt);
+    \fill[red] (0,0) circle (1.5pt);
+
+
+    % Hipérbolas superiores e inferiores
+    \foreach \c in {0.5,1,1.6,2.3,3.1}{
+    \draw[%
+        domain=-2:2,
+        smooth,
+        variable=\y,
+        mid arrow,
+        red,
+        thick%
+    ]%
+    plot({\y},{sqrt(\y*\y+\c)});
+    \draw[%
+        domain=-2:2,
+        smooth,
+        variable=\y,
+        mid arrow, 
+        red,
+        thick
+    ]%
+    plot ({\y},{-sqrt(\y*\y+\c)});
+    \draw[%
+        domain=-2:2,
+        smooth,
+        variable=\y,
+        mid arrow,
+        red,
+        thick%
+    ]%
+    plot({sqrt(\y*\y+\c)},{\y});
+    \draw[%
+        domain=-2:2,
+        smooth,
+        variable=\y,
+        mid arrow,
+        red,
+        thick%
+    ]%
+    plot({-sqrt(\y*\y+\c)},{\y});
+    }
+    \end{tikzpicture}
+    \end{center}
+
+%----------------------------- a > 0 ------------------------------------
+
+    \item Si $a>0$ entonces podemos considerar $\omega \coloneq \sqrt{a} > 0$, de donde se sigue que $(i\omega)^2 = -a$ (donde $i$ es la unidad imaginaria). Por lo tanto, tenemos $(i\omega)^{2n} = (-a)^n$ y $(i\omega)^{2n+1} = i\omega(-a)^n$ para todo $n \en \mathbb{N}_0$. Sustituyendo en la \cref{eq:exp}:
+    \begin{align*}
+    e^{tA}%
+    &= \sum^\infty_{n=0} \frac{t^{2n}(i\omega)^{2n}}{(2n)!}\, I + \frac{1}{i\omega}\sum^\infty_{n=0} \frac{t^{2n+1}(i\omega)^{2n+1}}{(2n+1)!}\, A\\
+    &= \sum^\infty_{n=0} \frac{(i)^{2n}(t\omega)^{2n}}{(2n)!}\, I + \frac{1}{i\omega}\sum^\infty_{n=0} \frac{(i)^{2n}i(t\omega)^{2n+1}}{(2n+1)!}\, A\\
+    &= \sum^\infty_{n=0} \frac{(-1)^n(t\omega)^{2n}}{(2n)!}\, I + \frac{1}{\omega}\sum^\infty_{n=0} \frac{(-1)^n(t\omega)^{2n+1}}{(2n+1)!}\, A\\
+    &= \cos(t\omega) I + \frac{1}{\omega}\sin(t\omega)A
+    \end{align*}
+    Esto por definición del seno y coseno. Luego, 
+    \[
+    e^{tA} = \mqty( \cos(t\omega) & 0 \\ 0 & \cos(t\omega)) + \mqty(0 & \frac{1}{\omega} \sin(t\omega) \\ \frac{-\omega^2}{\omega} 
+    \sin(t\omega) & 0) = \mqty( \cos(t\omega) & \frac{1}{\omega} \sin(t\omega) \\ -\omega 
+    \sin(t\omega) & \cos(t\omega))
+    \]
+    De esto se sigue que el flujo es:
+    \[
+    \phi^t(x,y) = \left(%
+        \cos(t\omega) x + \tfrac{1}{\omega}\sin(t\omega) y\;,\;%
+        -\omega\sin(t\omega) x + \cos(t\omega) y
+    \right)
+    \]
+    Por los puntos con $y=0$ y $x\neq 0$ pasa la solución $\phi^t(x,0) = (\cos(t\omega)x, -\omega\sin(t\omega)x)$ que describe una elipse con centro en el origen y con radios $|x|$ y $|x|\omega$. Es sencillo notar que estas elipses (junto al punto de equilibrio en el origen) son, en realidad, todas las soluciones del flujo.\footnote{Ya que todo punto de $\mathbb{R}^2$ está en la imagen de alguna de estas elipses; de esto se sigue, gracias a la unicidad, que la solución que pasa por dicho punto coincide con la correspondiente elipse.}  Para visualizar las soluciones, presento la siguiente figura para el caso $\omega = 3/2$ (es decir, $a = \sqrt{3/2}$):
+    %---------------- Espacio fase --------------------
+    \begin{center}
+    \begin{tikzpicture}[scale=1.1,>=latex]
+    \tikzset{
+        mid arrow/.style={
+            decoration={
+                markings,
+                mark=at position 0.25 with {\arrow{<}} 
+            },
+            postaction={decorate} 
+        }
+    }
+    % Ejes
+    \draw[-{Stealth}] (-3.5,0)--(3.5,0) node[right]{$x$};
+    \draw[-{Stealth}] (0,-2.5)--(0,2.5) node[above]{$y$};
+    
+    % Varias elipses
+    \foreach \r in {0.7,1.2,1.7,2.2,2.7,3.2}{%
+        \draw[mid arrow, green!70!black, thick] (0,0) ellipse ({\r} and {\r/1.5});
+    }
+    
+    % punto de equilibrio
+    \fill[green!70!black] (0,0) circle (1.5pt);
+    \end{tikzpicture}
+    \end{center}
+\end{itemize}
+\end{sol}
