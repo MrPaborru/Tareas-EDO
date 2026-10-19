@@ -765,113 +765,205 @@ Estudiaremos ahora cualitativamente la ecuación diferencial
 \end{enumerate}
 \end{ejer}
 \begin{sol}
-    \begin{enumerate}[label = (\alph*)]
-    \item Sea $\varphi$ una solución cualquiera de $\dot x = t - x^2$, entonces:
+\begin{enumerate}[label = (\alph*)]
+    \item Sea $\varphi$ una solución definida en un intervalo abierto $I$. Como el campo $f(t,x)=t-x^2$ es suave, también lo es $\varphi$, y
     \[
-        \dot\varphi(t)=t-\varphi(t)^2%
-        \quad\text{y}\quad%
-        \ddot\varphi(t) = 1-2\varphi(t)\dot\varphi(t) = 1-2\varphi(t)(t-\varphi(t)^2)
+        \dot\varphi=t-\varphi^2,\qquad
+        \ddot\varphi=1-2\varphi\dot\varphi,\qquad
+        \dddot\varphi=-2\dot\varphi^2-2\varphi\ddot\varphi.
     \]
-    \emph{Puntos críticos:}
-    los puntos críticos ocurren cuando $\dot\varphi(t)=0$, es decir
+    \emph{Máximos y mínimos:}
+    un instante $t_0\en I$ es crítico si y sólo si $t_0=\varphi(t_0)^2$, es decir, si la gráfica corta la parábola $t=x^2$. En cada uno de estos puntos,
     \[
-    t-\varphi(t)^2=0 \quad\Longleftrightarrow\quad \varphi(t)=\pm\sqrt{t}
+        \ddot\varphi(t_0)=1>0.
     \]
-    lo cual sólo tiene sentido para $t\ge 0$. Por tanto, los instantes críticos corresponden a las intersecciones de la solución con la parábola $x=\pm\sqrt{t}$. Más aún, si $t_0$ es punto crítico,
-    \[
-    \ddot\varphi(t_0)=1-2\varphi(t_0)\cdot 0 = 1
-    \]
-    por lo que $\ddot\varphi(t_0) > 0$ y $t_0$ es un mínimo local, i.e., no hay máximos locales.\par
+    Por tanto, todos los puntos críticos son mínimos locales estrictos y no hay máximos locales.
+
     \emph{Puntos de inflexión:}
-    los puntos de inflexión ocurren cuando $\ddot\varphi(t)=0$; es decir, cuando
+    la condición $\ddot\varphi(t_0)=0$ equivale a
     \[
-    1-2\varphi(t)(t-\varphi(t)^2) = 0
-    \quad\iff\quad
-    2\varphi(t)\bigl(t-\varphi(t)^2\bigr)=1
+        2\varphi(t_0)\big(t_0-\varphi(t_0)^2\big)=1.
     \]
-    es decir, para un punto de inflexión $(t,\varphi(t))$ debe cumplirse
+    En particular $\varphi(t_0)\neq0$ y $\dot\varphi(t_0)=1/(2\varphi(t_0))$. Además,
     \[
-    t = \varphi(t)^2 + \frac{1}{2\varphi(t)}, \qquad \varphi(t)\neq 0
+        \dddot\varphi(t_0)
+        =-2\dot\varphi(t_0)^2
+        =-\frac{1}{2\varphi(t_0)^2}<0.
     \]
-    Por tanto, los puntos de inflexión se encuentran en la siguiente curva de $\mathbb{R}^2$ 
+    Así, $\ddot\varphi$ cambia de signo positivo a negativo en $t_0$: la condición es también suficiente para que haya inflexión. Los puntos de inflexión son exactamente las intersecciones de la gráfica con
     \[
-    \mathcal{C}= \set*{(t,x)\en\mathbb{R}^2 \given x\neq 0,\; t = x^2 + \tfrac{1}{2x}}
+        \mathcal C=\set*{(t,x)\en\mathbb R^2
+            \given x\neq0,\quad t=x^2+\frac{1}{2x}}.
     \]
-    
-    \item \emph{Nota:} recordemos que en la prueba del \myref{ejer:1.6} solo usamos que $f_1 < f_2$ en la imagen de alguna de las soluciones.
-    
-    Sea $\varphi$ una solución definida en un intervalo $I$; más aún, podemos suponer sin perder generalidad que $I$ se extiende hasta $+\infty$, pues de no ser así, la proposición se cumple por vacuidad tomando $T \coloneq \max I$. Veamos primero que no es posible que $\varphi(t) > \sqrt{t}$ para cada $t \en I \cap \mathbb{R}^+$: en efecto, pues esto implicaría que $\varphi(t)^2 > \sqrt{t}^2 = t$ y por tanto
+
+    \item La desigualdad se entiende para los instantes $t$ que pertenecen al dominio $I$ de la solución. Si $b\coloneq\sup I<+\infty$, basta tomar $T=\max\set{0,b}$; el contenido del inciso está en el caso $\sup I=+\infty$.
+
+    En este último caso fijemos $s\en I$ con $s>0$. Si $\varphi(t)>\sqrt t$ para todo $t\geq s$, entonces $\dot\varphi(t)<0$ y
     \[
-        \dot{\varphi}(t) = t - \varphi(t)^2 < 0
+        \sqrt t<\varphi(t)\leq\varphi(s)\qquad(t\geq s),
     \]
-    pero esto implicaría que $\varphi$ es decreciente y al mismo tiempo $\varphi(t) > \sqrt{t} \xrightarrow{t \to \infty} +\infty$, lo cual es absurdo. Hemos probado que tiene que existir un $t_0 \en I \cap \mathbb{R}^+$ tal que $\varphi(t_0) \leq \sqrt{t_0}$. Ahora bien, gracias la continuidad de $\varphi$, o bien se cumple que $\varphi(t) < \sqrt{t}$ para cada $t \en I \cap \mathbb{R}^+$ (en cuyo caso ya terminamos), o bien existe $t_1 \en I \cap \mathbb{R}^+$ tal que $\varphi(t_1) = \sqrt{t_1}$ (pues si tuviéramos algún $t$ con $\varphi(t) > \sqrt{t}$, el teorema del valor intermedio garantizaría que existe el $t_1$ que buscamos). Por este motivo , podemos suponer que se cumple $\varphi(t_1) = \sqrt{t_1}$ para algún $t_1 \en I \cap \mathbb{R}^2$; sin embargo, la función $\sqrt{t}$ es solución de $\dot{x} = (2x)^{-1}$ y además
+    lo cual es imposible cuando $t\to+\infty$. Existe, pues, $t_0\geq s$ tal que $\varphi(t_0)\leq\sqrt{t_0}$.
+
+    Pongamos $h(t)=\varphi(t)-\sqrt t$ para $t>0$. En cualquier cero de $h$ se cumple
     \[
-        t^2 - (\sqrt{t})^2 = 0 < (2\sqrt{t})^{-1}
+        \dot h(t)=t-\varphi(t)^2-\frac{1}{2\sqrt t}
+        =-\frac{1}{2\sqrt t}<0.
     \]
-    por lo cual, el \myref{ejer:1.6} (recordemos la nota del inicio) implica que $\varphi(t) < \sqrt{t}$ con $t > t_0$. 
-    
-    \item 
+    Por tanto, $h$ sólo puede cruzar el cero de positivo a negativo. Si $h(t_0)<0$, no puede tener un primer cero posterior, pues en él su derivada izquierda sería no negativa; si $h(t_0)=0$, primero se hace negativa y se aplica el mismo argumento. En ambos casos,
+    \[
+        \varphi(t)<\sqrt t\qquad(t>t_0),
+    \]
+    y podemos tomar $T=t_0$.
+
+    \item Escribamos $I_c={]a_c,b_c[}$ para el intervalo maximal de $\varphi_c$, donde $a_c<0<b_c$. Usaremos existencia y unicidad, dependencia continua respecto del dato inicial y el teorema de prolongación. En particular, si $c<d$, las soluciones no se cruzan:
+    \[
+        \varphi_c(t)<\varphi_d(t)\qquad(t\en I_c\cap I_d).
+    \]
+    Para $0\leq t<b_c$ tenemos
+    \begin{equation}\label{eq:t1-e9-cota-superior}
+        \varphi_c(t)
+        =c+\frac{t^2}{2}-\int_0^t\varphi_c(s)^2\,\mathrm{d}s
+        \leq c+\frac{t^2}{2}.
+    \end{equation}
+    Si $b_c<+\infty$, la función $\varphi_c(t)-t^2/2$ es decreciente, así que tiene límite finito o $-\infty$ cuando $t\to b_c^-$. Un límite finito permitiría prolongar la solución más allá de $b_c$. Por tanto,
+    \begin{equation}\label{eq:t1-e9-explosion}
+        b_c<+\infty
+        \quad\implies\quad
+        \lim_{t\to b_c^-}\varphi_c(t)=-\infty.
+    \end{equation}
+
     \begin{itemize}
-        \item Supongamos por contradicción que $I_c$ es el dominio de $\varphi_c$ y $b \coloneq \sup I_c < +\infty$, entonces, como consecuencia directa del teorema de escape de compactos,
+        \item \emph{Globalidad para $c\geq0$.}
+        Si $c>0$, la solución no puede tener un primer cero $t_1>0$: en ese instante su derivada izquierda sería no positiva, mientras que la ecuación da $\dot\varphi_c(t_1)=t_1>0$. Si $c=0$, entonces
         \[
-        \lim_{t \to b^-} |\varphi_c(t)| = +\infty
+            \varphi_0(0)=\dot\varphi_0(0)=0,\qquad
+            \ddot\varphi_0(0)=1,
         \]
-        Veamos ahora que esto es imposible porque existen cotas uniformes que impiden tanto el crecimiento hacia $+\infty$ como la ca\'ida hacia $-\infty$.
-    
-        Primero, para la cota superior observamos que
-        \[\varphi_c'(t)=t-\varphi_c(t)^2\le t\qquad(\forall t \en I_c)\]
-        de modo que integrando entre $0$ y $t$ se obtiene
-        \[\varphi_c(t)\le c+\int_0^t s\,ds=c+\tfrac{t^2}{2}\]
-        En particular $\varphi_c(t)$ no puede divergir a $+\infty$ en tiempo finito.
-        
-        Para la cota inferior notemos que su $c > 0$, entonces $\varphi_c$ se mantiene mayor o igual a cero, pues en otro caso tendría (por continuidad) que existir $t_1 > 0$ tal que $\varphi_c(t_1) = 0$, por lo que $\dot{\varphi_c}(t_1) = t_1 > 0$ así que jamás puede tocar al eje cero "bajando". De forma similar, el caso $c = 0$ la función se mantiene justo a la derecha dentro de la zona donde la derivada es positiva (el lado derecho de la parábola $\pm\sqrt{t}$) por lo que la función alcanza un valor positivo justo a la derecha y repetir el argumento anterior para probar que la función no se hace negativa. En cualquier caso, no puede explotar a $-\infty$.
+        de modo que $\varphi_0(t)=t^2/2+o(t^2)>0$ para $t>0$ suficientemente pequeño, y después se aplica el argumento anterior. Así, $\varphi_c(t)>0$ para todo $0<t<b_c$. Junto con \eqref{eq:t1-e9-explosion}, esto prueba que $b_c=+\infty$.
 
-        \item El argumento consiste en comparar localmente la ecuaci\'on con la EDO explotante $y'=-\tfrac12 y^2$. Fijemos $\varepsilon>0$ (por ejemplo $\varepsilon=1$) y consideremos el intervalo $[0,\varepsilon]$. Si $x\le-\sqrt{2\varepsilon}$ y $t\in[0,\varepsilon]$ entonces
-        \[t-x^2\le\varepsilon-x^2\le-\tfrac12 x^2\]
-        Tomemos $k:=-\sqrt{2\varepsilon}<0$ y consideremos $c<k$. Por continuidad de la soluci\'on existe un intervalo inicial en el que $\varphi_c(t)\le-\sqrt{2\varepsilon}$ (pues $\varphi_c(0)=c$ ya es m\'as negativo que $-\sqrt{2\varepsilon}$). Mientras $\varphi_c(t)\le-\sqrt{2\varepsilon}$ y $t\in[0,\varepsilon]$ se cumple
-        \[\varphi_c'(t)=t-\varphi_c(t)^2\le -\tfrac12\varphi_c(t)^2\]
-        Sea ahora $y(t)$ la soluci\'on de
-        \[y'=-\tfrac12 y^2,\qquad y(0)=c\]
-        La soluci\'on expl\'icita es
-        \[y(t)=\frac{2c}{ct+2}=\frac{c}{1+(c/2)t}\]
-        y para $c<0$ tiene singularidad en tiempo finito $T=-2/c>0$ (es decir $y(t)\to-\infty$ cuando $t\to T^-$). Por el teorema de comparaci\'on, mientras ambas soluciones existan y se mantenga la condici\'on $\varphi_c(t)\le-\sqrt{2\varepsilon}$ se tiene $\varphi_c(t)\le y(t)$. Dado que $y$ explota a $-\infty$ en tiempo finito, la funci\'on $\varphi_c$ tambi\'en debe explotar (al menos tan pronto como $y$). Por tanto existe un valor $k<0$ (por ejemplo $k=-\sqrt{2}$ si elegimos $\varepsilon=1$) tal que para todo $c<k$ la soluci\'on maximal $\varphi_c$ tiende a $-\infty$ en tiempo finito. 
+        El mismo razonamiento vale si una solución toma un valor no negativo en cualquier instante $s\geq0$: será positiva para $t>s$ y global hacia la derecha. La cota superior correspondiente se obtiene integrando $\dot\varphi(t)\leq t$ desde $s$.
 
-        \item Definimos
-        \[G:=\{c\in\mathbb R:\ \varphi_c\text{ est\'a definida para todo }t>0\}\]
-        (es decir, el conjunto de condiciones iniciales que producen soluciones globales hacia la derecha). Por el primer sub-inciso sabemos que $[0,\infty)\subset G$, luego $G\neq\emptyset$. Por el segundo sub-inciso, existe $k<0$ tal que $(-\infty,k)\cap G=\emptyset$, luego $G$ est\'a acotado inferiormente; en particular el infimo
-        \[c_0:=\inf G\in\mathbb R\]
-        est\'a bien definido y finito.
-        
-        Sea $(c_n)$ una sucesi\'on decreciente de elementos de $G$ con $c_n\to c_0$. Fijemos $T>0$. Para cada $n$ la soluci\'on $\varphi_{c_n}$ est\'a definida en $[0,T]$. Queremos mostrar que la familia $\{\varphi_{c_n}\}_n$ est\'a uniformemente acotada en $[0,T]$, lo que permitir\'a pasar a un l\'imite y usar la dependencia continua con respecto a la condici\'on inicial para obtener una soluci\'on definida en $[0,T]$ con valor inicial $c_0$; como $T>0$ es arbitrario, esto dar\'a la globalidad de $\varphi_{c_0}$.
-        
-        Primero, por la desigualdad ya vista, para todo $n$ y todo $t\in[0,T]$ se tiene
-        \[\varphi_{c_n}(t)\le c_n+\tfrac{t^2}{2}\le c_1+\tfrac{T^2}{2},\]
-        esto da una cota superior uniforme. Supongamos ahora que no existiera una cota inferior uniforme en $[0,T]$: entonces existir\'ia $t_0\in[0,T]$ y una subserie (todav\'ia denotada $c_n$) tal que $\varphi_{c_n}(t_0)\to-\infty$ cuando $n\to\infty$. Sea $M>0$ grande y elijamos $n$ tal que $\varphi_{c_n}(t_0)\le -M$. Aplicando el argumento del segundo sub-inciso (comparando con la ecuaci\'on $y'=-\tfrac12y^2$) se ve que si $M$ es suficientemente grande la soluci\'on que toma el valor $-M$ en $t_0$ explotar\'a a los pocos instantes (en un tiempo menor que $T-t_0$), lo que contradice que $\varphi_{c_n}$ est\'a definida en todo $[0,T]$. Por tanto la familia $\{\varphi_{c_n}\}_n$ est\'a acotada uniformemente en $[0,T]$.
-        
-        De esta acotaci\'on uniforme y de la dependenci\'on continua de la soluci\'on respecto de la condici\'on inicial (teorema de continuidad respecto a datos iniciales en problemas de valor inicial), se deduce que la sucesi\'on $\varphi_{c_n}$ converge uniformemente en $[0,T]$ hacia una soluci\'on $\varphi$ de la EDO con $\varphi(0)=c_0$. Como $T>0$ era arbitrario, esta soluci\'on est\'a definida en todo $[0,\infty)$ y por maximalidad de las $\varphi_c$ coincide con $\varphi_{c_0}$. Por tanto $c_0\in G$ y $\varphi_{c_0}$ es global.
-        
-        Sea $\varphi:=\varphi_{c_0}$. Introduzcamos el error respecto de la rama $-\sqrt t$:
-        \[\varepsilon(t):=\varphi(t)+\sqrt t.\]
-        Una cuenta directa sustituyendo $\varphi=-\sqrt t+\varepsilon$ en la ecuaci\'on da
-        \begin{align*}
-        \dot\varphi &= t-\varphi^2 \\ 
-        -\tfrac{1}{2\sqrt t}+\dot\varepsilon &= t-\big(t-2\varepsilon\sqrt t+\varepsilon^2\big)=2\varepsilon\sqrt t-\varepsilon^2, \\
-        \end{align*}
-        luego
+        \item \emph{Explosión para datos suficientemente negativos.}
+        Probemos primero un criterio que también usaremos en el último punto. Supongamos que una solución toma el valor $u<-M$ en un instante $s\geq0$, donde
+        \[
+            M\geq2,\qquad M^2\geq2(s+1).
+        \]
+        Mientras exista en $[s,s+1]$, no puede cruzar la recta $x=-M$ hacia arriba: sobre ella,
+        \[
+            t-M^2\leq s+1-M^2\leq-\frac{M^2}{2}<0.
+        \]
+        Por tanto, permanece por debajo de $-M$ y satisface
+        \[
+            \dot\varphi(t)=t-\varphi(t)^2
+            \leq-\frac12\varphi(t)^2.
+        \]
+        Al derivar el recíproco e integrar resulta
+        \[
+            \frac{1}{\varphi(t)}
+            \geq\frac1u+\frac{t-s}{2}.
+        \]
+        El lado izquierdo es negativo, pero el derecho se anula en
+        \[
+            \tau=s-\frac2u<s+1.
+        \]
+        La solución no puede estar definida hasta $\tau$; su extremo derecho satisface $b\leq\tau$ y, por \eqref{eq:t1-e9-explosion} (o su versión con dato en $s$), tiende a $-\infty$ allí.
+
+        En particular, tomando $s=0$ y $M=2$, podemos elegir
+        \[
+            k=-2.
+        \]
+        Para todo $c<-2$ obtenemos $b_c\leq-2/c<1$, con $\varphi_c(t)\to-\infty$ cuando $t\to b_c^-$. La comparación se realiza enteramente dentro del intervalo donde es válida.
+
+        \item \emph{Existencia del dato crítico.}
+        Definamos
+        \[
+            G=\set*{c\en\mathbb R\given b_c=+\infty},
+            \qquad c_0=\inf G.
+        \]
+        Los dos puntos anteriores dan $[0,+\infty[\subseteq G$ y $G\cap{]{-\infty},-2[}=\varnothing$, así que $-2\leq c_0\leq0$. Además, $G$ es cerrado hacia arriba: si $c\en G$ y $d>c$, la desigualdad $\varphi_d>\varphi_c$ impide que $\varphi_d$ tienda a $-\infty$ en un extremo derecho finito. Por \eqref{eq:t1-e9-explosion}, $d\en G$.
+
+        Veamos que $\mathbb R\setminus G$ es abierto. Si $c\notin G$, entonces $b_c<+\infty$ y $\varphi_c(t)\to-\infty$ cuando $t\to b_c^-$. Fijemos $M\geq2$ con $M^2\geq2(b_c+1)$ y elijamos $s\en[0,b_c[$ tal que $\varphi_c(s)<-M$. Por dependencia continua, para todo $d$ suficientemente próximo a $c$, la solución $\varphi_d$ existe en $[0,s]$ y cumple $\varphi_d(s)<-M$. El criterio del punto anterior, pues $M^2\geq2(s+1)$, implica que también $d\notin G$.
+
+        Por tanto $G$ es cerrado y contiene a su ínfimo: $c_0\en G$ y $G=[c_0,+\infty[$. Así hemos probado la globalidad de $\varphi_{c_0}$ sin suponer cotas uniformes para una sucesión de soluciones.
+
+        \emph{La solución crítica permanece negativa.}
+        Escribamos $\varphi=\varphi_{c_0}$. Si $\varphi(s)\geq0$ para algún $s\geq0$, el primer punto implica que $\varphi(r)>0$ para cualquier $r>s$. Por dependencia continua, existe $d<c_0$ suficientemente próximo a $c_0$ para que $\varphi_d$ esté definida hasta $r$ y $\varphi_d(r)>0$. Pero entonces $\varphi_d$ sería global hacia la derecha, contradiciendo $c_0=\inf G$. Concluimos que
+        \[
+            \varphi(t)<0\quad(t\geq0);
+            \qquad\text{en particular, }c_0<0.
+        \]
+
+        \emph{Acercamiento a la rama negativa.}
+        Primero afirmamos que $\varphi(t)<-\sqrt t$ para todo $t>0$. Si $\varphi(s)\geq-\sqrt s$ en algún $s>0$, la función $h(t)=\varphi(t)+\sqrt t$ satisface
+        \[
+            \dot h(t)=\frac{1}{2\sqrt t}>0
+            \qquad\text{en cada cero de }h.
+        \]
+        El argumento de primer cruce del inciso (b) da $h(t)>0$ para todo $t>s$. Como $\varphi$ permanece negativa, se sigue que
+        \[
+            -\sqrt t<\varphi(t)<0,\qquad
+            \dot\varphi(t)>0\qquad(t>s).
+        \]
+        En particular, $\varphi(s)\leq\varphi(t)<0$ y
+        \[
+            \dot\varphi(t)=t-\varphi(t)^2
+            \geq t-\varphi(s)^2.
+        \]
+        Integrando desde $s$ obtendríamos $\varphi(t)\to+\infty$, contradiciendo su negatividad. Esto prueba la afirmación.
+
+        Ahora pongamos $\eta(t)=-\varphi(t)-\sqrt t>0$ para $t>0$. La ecuación da la identidad exacta
         \begin{equation}\label{eq:eps}
-        \dot\varepsilon(t)=2\sqrt t\,\varepsilon(t)-\varepsilon(t)^2+\frac{1}{2\sqrt t}.
+            \dot\eta(t)
+            =2\sqrt t\,\eta(t)+\eta(t)^2-\frac{1}{2\sqrt t}.
         \end{equation}
-        
-        Supondremos que $\varepsilon(t)$ no tiende a $0$ cuando $t\to\infty$ y obtendremos contradicci\'on. Si existiera una subsucesi\'on con l\'imite $L>0$, entonces para $t$ grande la ecuaci\'on aproximada
-        \[\dot\varepsilon\approx 2\sqrt t\,\varepsilon
+        Fijemos $s>0$ y supongamos que $A\coloneq\eta(s)\geq1/(4s)$. Para $t\geq s$, siempre que $\eta(t)\geq A$ tenemos
+        \[
+            2\sqrt t\,\eta(t)-\frac{1}{2\sqrt t}
+            \geq\frac{t-s}{2s\sqrt t}\geq0,
+            \qquad \dot\eta(t)\geq\eta(t)^2>0.
         \]
-        indica que $\varepsilon$ crecer\'ia exponencialmente (con tasa proporcional a $\int^t\!\sqrt s\,ds\sim \tfrac23 t^{3/2}$), lo cual es incompatible con que $\varphi$ siga siendo una soluci\'on global de la EDO (en particular le llevar\'ia a cruzar hacia valores positivos y escapar de la vecindad de $-\sqrt t$). Si en cambio existiera una subsucesi\'on con l\'imite $L<0$, entonces para $t$ grande $\varepsilon$ ser\'ia suficientemente negativa y la desigualdad aproximada mostr\'aria que $\dot\varepsilon$ es muy negativa, llevando a explosiones hacia $-\infty$ en tiempo finito; esto contradice la globalidad de $\varphi$. Por estos dos motivos el \'unico valor posible para un l\'imite (si existe) es $0$.
-        
-        Para formalizar la existencia del l\'imite y que sea $0$ se puede proceder con una versi\'on refinada del argumento de shooting: si $c>c_0$ entonces $\psi:=\varphi_c-\varphi_{c_0}$ es positiva y satisface (al menos para $t$ grandes) una ecuaci\'on linealizada del tipo
-        \[\dot\psi\approx 2\sqrt t\,\psi,\]
-        que crece r\'apidamentey empuja a $\varphi_c$ lejos de la rama negativa; en particular para $c>c_0$ se tiene $\limsup_{t\to\infty}(\varphi_c(t)+\sqrt t)>0$. Por otra parte, para $c<c_0$ la soluci\'on explota en tiempo finito. Por continuidad estricta de la dependencia de la soluci\'on respecto de la condici\'on inicial (y por monotonicidad en la condici\'on inicial), existe entonces un valor cr\'itico $c_0$ tal que precisamente para $c=c_0$ la soluci\'on queda aislada y verifica
-        \[\lim_{t\to\infty}\big(\varphi_{c_0}(t)+\sqrt t\big)=0.\]
-        La unicidad de tal $c_0$ se sigue de la monotonicidad: si hubiera $c_1>c_0$ con la misma propiedad, entonces por monotonicidad $\varphi_{c_1}(t)>\varphi_{c_0}(t)$ para todo $t$, lo que impedir\'ia que ambas tuvieran la misma correcci\'on $o(1)$ respecto de $-\sqrt t$ cuando $t\to\infty$.\qedhere
+        En particular, $\eta$ no puede cruzar el nivel $A$ hacia abajo, así que la desigualdad vale para todo $t\geq s$. Integrando $(1/\eta)'=-\dot\eta/\eta^2\leq-1$ se obtiene
+        \[
+            0<\frac{1}{\eta(t)}
+            \leq\frac1A-(t-s),
+        \]
+        lo cual es imposible en $t=s+1/A$, pues $\eta$ está definida para todo $t>0$. Por tanto $\eta(s)<1/(4s)$. Como $s$ era arbitrario,
+        \[
+            -\sqrt t-\frac{1}{4t}<\varphi_{c_0}(t)<-\sqrt t
+            \qquad(t>0).
+        \]
+        Esta cota prueba directamente que
+        \[
+            \lim_{t\to+\infty}\big(\varphi_{c_0}(t)+\sqrt t\big)=0.
+        \]
+
+        \emph{Unicidad del dato crítico.}
+        Supongamos que otra solución global $\psi=\varphi_d$ satisface también $\psi(t)+\sqrt t\to0$. La diferencia $z=\psi-\varphi$ cumple exactamente
+        \[
+            \dot z=-(\psi+\varphi)z.
+        \]
+        Si $d\neq c_0$, entonces $z(T)\neq0$ para cualquier $T\geq0$. Como $\psi(t)+\varphi(t)=-2\sqrt t+o(1)$, podemos elegir $T>0$ de modo que $-(\psi(t)+\varphi(t))\geq\sqrt t$ para todo $t\geq T$. Por tanto,
+        \[
+            |z(t)|=|z(T)|\exp\left(-\int_T^t(\psi(s)+\varphi(s))\,\mathrm{d}s\right)
+            \geq |z(T)|e^{\frac23(t^{3/2}-T^{3/2})}
+            \longrightarrow+\infty.
+        \]
+        Esto contradice $z(t)=(\psi(t)+\sqrt t)-(\varphi(t)+\sqrt t)\to0$. Luego $d=c_0$.
     \end{itemize}
-    \end{enumerate}
+\end{enumerate}
+
+\emph{Comprobación mediante funciones de Airy.}
+La sustitución $x=u'/u$ transforma la ecuación en $u''=tu$. La función de Airy $\operatorname{Ai}$ resuelve esta ecuación y no tiene ceros en $[0,+\infty[$. Sus desarrollos asintóticos dan
+\[
+    \frac{\operatorname{Ai}'(t)}{\operatorname{Ai}(t)}
+    =-\sqrt t-\frac{1}{4t}+O(t^{-5/2})
+    \qquad(t\to+\infty).
+\]
+Así, la unicidad que acabamos de probar identifica la solución crítica y su dato inicial:
+\[
+    \varphi_{c_0}(t)=\frac{\operatorname{Ai}'(t)}{\operatorname{Ai}(t)},\qquad
+    c_0=-3^{1/3}\frac{\Gamma(2/3)}{\Gamma(1/3)}
+    \approx-0.7290111329.
+\]
+Esta comprobación utiliza las identidades y expansiones de la \emph{Digital Library of Mathematical Functions} del NIST.\footnote{Véanse \href{https://dlmf.nist.gov/9.2}{DLMF, \S9.2}, ecuaciones (9.2.1), (9.2.3) y (9.2.4); \href{https://dlmf.nist.gov/9.7}{\S9.7}, ecuaciones (9.7.5) y (9.7.6); y \href{https://dlmf.nist.gov/9.9}{\S9.9(i)}, sobre los ceros de $\operatorname{Ai}$.} La demostración cualitativa anterior es independiente de estas funciones especiales.
 \end{sol}
